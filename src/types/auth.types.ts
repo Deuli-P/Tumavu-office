@@ -4,7 +4,7 @@ export interface User {
   email: string
   companyId: string
   companyName: string
-  role: 'owner' | 'admin'
+  role: 'owner' | 'admin' | 'ADMIN'
   avatarUrl?: string
 }
 

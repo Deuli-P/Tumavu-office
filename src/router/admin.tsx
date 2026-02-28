@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/store/auth.store'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 
-const RootRedirect = () => {
+const AdminOnlyLayout = () => {
   const token = useAuthStore((state) => state.token)
   const user = useAuthStore((state) => state.user)
 
@@ -9,7 +9,11 @@ const RootRedirect = () => {
     return <Navigate replace to="/auth/login" />
   }
 
-  return <Navigate replace to={user?.role === 'ADMIN' ? '/admin' : '/app'} />
+  if (user?.role !== 'ADMIN') {
+    return <Navigate replace to="/app" />
+  }
+
+  return <Outlet />
 }
 
-export default RootRedirect
+export default AdminOnlyLayout
