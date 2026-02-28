@@ -57,7 +57,7 @@ export function RegisterPage() {
 
       <p className="mt-4 text-sm">
         Déjà un compte ?{' '}
-        <Link className="underline" to="/auth/login">
+        <Link className="underline" to="/auth/login/choice">
           Se connecter
         </Link>
       </p>

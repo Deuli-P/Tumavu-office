@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { LoginPage } from '@/pages/auth/login.page'
 import { RegisterPage } from '@/pages/auth/register.page'
 import { DashboardPage } from '@/pages/dashboard/dashboard.page'
 import { JobsPage } from '@/pages/jobs/jobs.page'
@@ -17,6 +16,9 @@ import GuestOnlyLayout from './guest'
 import AuthOnlyLayout from './logged'
 import AdminOnlyLayout from './admin'
 import RootRedirect from './rootRedirect'
+import { LoginAdminPage } from '@/pages/auth/login/admin.page'
+import { LoginCompanyPage } from '@/pages/auth/login/company.page'
+import { ChoiceLoginPage } from '@/pages/auth/login/choice.page'
 
 export const router = createBrowserRouter([
   {
@@ -27,7 +29,13 @@ export const router = createBrowserRouter([
     path: '/auth',
     element: <GuestOnlyLayout />,
     children: [
-      { path: 'login', element: <LoginPage /> },
+      { path: 'login',
+        children: [
+          { path: 'choice', element: <ChoiceLoginPage />, index: true },
+          { path: 'company', element: <LoginCompanyPage /> },
+          { path: 'admin', element: <LoginAdminPage /> },
+
+        ] },
       { path: 'register', element: <RegisterPage /> },
     ],
   },

@@ -6,7 +6,7 @@ const AdminOnlyLayout = () => {
   const user = useAuthStore((state) => state.user)
 
   if (!token) {
-    return <Navigate replace to="/auth/login" />
+    return <Navigate replace to="/auth/login/choice" />
   }
 
   if (user?.role !== 'ADMIN') {

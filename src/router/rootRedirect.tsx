@@ -6,7 +6,7 @@ const RootRedirect = () => {
   const user = useAuthStore((state) => state.user)
 
   if (!token) {
-    return <Navigate replace to="/auth/login" />
+    return <Navigate replace to="/auth/login/choice" />
   }
 
   return <Navigate replace to={user?.role === 'ADMIN' ? '/admin' : '/app'} />
