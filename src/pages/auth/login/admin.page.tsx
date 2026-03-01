@@ -1,14 +1,14 @@
-import {  useState, type SubmitEventHandler } from 'react'
+import {  useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { Building2 } from 'lucide-react';
 
 export function LoginAdminPage() {
-  const setAuth = useAuthStore((state) => state.setAuth)
-  const [ loading, setLoading ] = useState<boolean>(false);
+  const { signIn } = useAuthStore()
+  const [ loading, setLoading ] = useState<boolean>(false);
 
   const [ form , setForm ]= useState<{email: string, password: string}>({
-    email: 'admin@tumavu.com',
+    email: 'admin@tumavu.eu',
     password: 'azertyuiop',
   })
 
@@ -16,39 +16,7 @@ export function LoginAdminPage() {
   const handleSignIn = async ()=> {
     try{
         setLoading(true);
-        console.log('start sign in')
-        if(form.email === '' || form.password === ''){
-            throw new Error('Email et mot de passe sont requis');
-        };
-
-       // Regex de mail 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if(!emailRegex.test(form.email)){
-            throw new Error('Email invalide');
-        };
-
-
-
-        console.log('form is valid, sending request', form);
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: form.email, 
-                password: form.password,
-                as: 'ADMIN'
-            }),
-        });
-        if (!response.ok) {
-            throw new Error('Erreur lors de la connexion');
-        }
-        const data = await response.json();
-        setAuth({
-            token: data.token,
-            user: data.user,
-        });
+        await signIn('ADMIN', form.email, form.password);
     }
     catch(error){
       console.error('Erreur lors de la connexion en tant qu\'admin :', error);

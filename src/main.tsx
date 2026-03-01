@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router'
+import { useAuthStore } from './store/auth.store'
+
+useAuthStore.getState().initSession()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

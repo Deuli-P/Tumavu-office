@@ -11,7 +11,6 @@ import { AdminCompaniesPage } from '@/pages/admin/companies/companies.page'
 import { AdminCreateCompanyPage } from '@/pages/admin/companies/create-company.page'
 import { AdminUsersPage } from '@/pages/admin/users/users.page'
 import { AppLayout } from '@/components/layout/AppLayout'
-import { AdminLayout } from '@/components/layout/AdminLayout'
 import GuestOnlyLayout from './guest'
 import AuthOnlyLayout from './logged'
 import AdminOnlyLayout from './admin'
@@ -19,6 +18,7 @@ import RootRedirect from './rootRedirect'
 import { LoginAdminPage } from '@/pages/auth/login/admin.page'
 import { LoginCompanyPage } from '@/pages/auth/login/company.page'
 import { ChoiceLoginPage } from '@/pages/auth/login/choice.page'
+import { Sidebar } from '@/components/layout/Sidebar'
 
 export const router = createBrowserRouter([
   {
@@ -63,7 +63,7 @@ export const router = createBrowserRouter([
     element: <AdminOnlyLayout />,
     children: [
       {
-        element: <AdminLayout />,
+        element: <Sidebar />,
         children: [
           { index: true, element: <AdminDashboardPage /> },
           { path: 'companies', element: <AdminCompaniesPage /> },
