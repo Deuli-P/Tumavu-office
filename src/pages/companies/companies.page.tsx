@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom'
-import { Plus, MapPin, Briefcase, Users } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { Plus, MapPin, Briefcase, Users, File } from 'lucide-react'
 import type { Company } from '@/types/company.types'
+import { companies } from '@/data/companies'
 
 const mockCompanies: Company[] = [
   { id: 'c1', name: 'Acme Corp', address: '12 Rue de Rivoli, 75001 Paris', description: 'Leader en solutions logistiques', ownerId: 'u1', ownerName: 'Jean Dupont', jobsCount: 12, usersCount: 8, createdAt: '2026-02-20' },
@@ -12,6 +13,17 @@ const mockCompanies: Company[] = [
 ]
 
 export function CompaniesPage() {
+
+  const navigate= useNavigate();
+
+
+  const handleNavigateToCompany = (companyId: string) => {
+    // Logique de navigation vers la page de détails de la company
+    console.log(`Navigating to company with ID: ${companyId}`);
+    navigate(`/app/companies/${companyId}`);
+  }
+
+
   return (
     <div className="p-8">
       <div className="flex items-center justify-between mb-6">
@@ -32,41 +44,48 @@ export function CompaniesPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b bg-muted/40">
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Company</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Owner</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Entreprise</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Proprietaire</th>
               <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Annonces</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Utilisateurs</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Créée le</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jobs</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Employés</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ajouté le</th>
             </tr>
           </thead>
           <tbody className="divide-y">
-            {mockCompanies.map((company) => (
-              <tr key={company.id} className="hover:bg-muted/30 transition-colors">
+            {companies.map((company) => (
+              <tr key={company.id} className="hover:bg-muted/30 transition-colors cursor-pointer"  onClick={() => handleNavigateToCompany(company.id)}>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-destructive/10 text-sm font-bold text-destructive shrink-0">
-                      {company.name[0]}
+                      {company.name}
                     </div>
                     <div>
                       <p className="font-medium">{company.name}</p>
                       <p className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
                         <MapPin className="h-3 w-3 shrink-0" />
-                        {company.address}
+                        {company.address.city}, {company.address.country}
                       </p>
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-sm text-muted-foreground">{company.ownerName}</td>
+                <td className="px-6 py-4 text-sm text-muted-foreground">{company.owner.firstName.charAt(0)}. {company.owner.lastName}</td>
+                <td className="px-6 py-4">
+                  <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                    <File className="h-3.5 w-3.5" />
+                    {company.annoucments.length}
+                  </span>
+                </td>
                 <td className="px-6 py-4">
                   <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                     <Briefcase className="h-3.5 w-3.5" />
-                    {company.jobsCount}
+                    {company.jobs.length}
                   </span>
                 </td>
                 <td className="px-6 py-4">
                   <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                     <Users className="h-3.5 w-3.5" />
-                    {company.usersCount}
+                    {company.employes.length}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-sm text-muted-foreground">

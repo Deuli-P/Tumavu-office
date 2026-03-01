@@ -10,6 +10,21 @@ export interface Company {
   createdAt: string
 }
 
+export interface Station {
+  id: string
+  name: string
+  country: {
+    code: string
+    name: string
+    id: string
+  }
+  address: {
+    street: string
+    zipCode: string
+    city: string
+  }
+}
+
 export interface CreateCompanyPayload {
   name: string
   address: string

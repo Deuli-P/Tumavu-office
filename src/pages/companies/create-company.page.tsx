@@ -3,11 +3,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
-import type { AdminUser } from '@/types/admin.types'
+import { stations } from '@/data/stations'
 
 const schema = z.object({
   name: z.string().min(2, 'Nom requis'),
-  address: z.string().min(5, 'Adresse complète requise'),
+  address: z.object({
+    street: z.string().min(5, 'Adresse complète requise'),
+    city: z.string().min(2, 'Ville requise'),
+    zipCode: z.string().min(2, 'Code postal requis'),
+  }),
   description: z.string().optional(),
   ownerId: z.string().min(1, 'Veuillez sélectionner un owner'),
 })
@@ -15,14 +19,6 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>
 
 // Mock : liste des utilisateurs disponibles comme owner
-const availableOwners: AdminUser[] = [
-  { id: 'u1', name: 'Jean Dupont', email: 'jean.dupont@email.com', role: 'owner', createdAt: '2026-01-01' },
-  { id: 'u2', name: 'Claire Martin', email: 'claire.martin@email.com', role: 'owner', createdAt: '2026-01-05' },
-  { id: 'u3', name: 'Pierre Bernard', email: 'pierre.bernard@email.com', role: 'admin', createdAt: '2026-01-10' },
-  { id: 'u4', name: 'Sophie Leclerc', email: 'sophie.leclerc@email.com', role: 'owner', createdAt: '2026-01-15' },
-  { id: 'u5', name: 'Karim Benali', email: 'karim.benali@email.com', role: 'owner', createdAt: '2026-01-20' },
-  { id: 'u6', name: 'Amina Diallo', email: 'amina.diallo@email.com', role: 'admin', createdAt: '2026-01-25' },
-]
 
 export function AdminCreateCompanyPage() {
   const navigate = useNavigate()
@@ -65,19 +61,59 @@ export function AdminCreateCompanyPage() {
             placeholder="ex. Acme Corp"
             className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
           />
+          <label className="text-sm font-medium">
+            Station <span className="text-destructive">*</span>
+          </label>
+          <select
+            {...register('ownerId')}
+            className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2"
+          >
+            <option value="">— Sélectionner un utilisateur —</option>
+            {stations.map((u) => (
+              <option key={u.id} value={u.id}>
+                {u.name} ({u.country.name})
+              </option>
+            ))}
+          </select>
           {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
         </div>
 
         {/* Adresse */}
         <div className="space-y-1.5">
+          <h2 className='text-m font-medium'>Adresse</h2>
+          <div className="flex flex-col w-full">
+            <label className="text-sm font-medium">
+              Rue <span className="text-destructive">*</span>
+            </label>
+            <input
+              {...register('address.street')}
+              placeholder="ex. 12 Rue de Rivoli, 75001 Paris, France"
+              className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
+              />
+           </div>
+        <div className='flex flex-row gap-4'>
+           <div className="flex flex-col">
           <label className="text-sm font-medium">
-            Adresse complète <span className="text-destructive">*</span>
+            Code postal <span className="text-destructive">*</span>
           </label>
           <input
-            {...register('address')}
+            {...register('address.zipCode')}
+            placeholder="ex. 12 Rue de Rivoli, 75001 Paris, France"
+            className="w-30 rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
+            />
+          </div>
+        <div className="flex flex-col w-full">
+          <label className="text-sm font-medium">
+           Ville <span className="text-destructive">*</span>
+          </label>
+          <input
+            {...register('address.city')}
             placeholder="ex. 12 Rue de Rivoli, 75001 Paris, France"
             className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
-          />
+            />
+          </div>
+            </div>
+        
           {errors.address && <p className="text-xs text-destructive">{errors.address.message}</p>}
         </div>
 
@@ -96,20 +132,41 @@ export function AdminCreateCompanyPage() {
 
         {/* Owner */}
         <div className="space-y-1.5">
-          <label className="text-sm font-medium">
-            Owner <span className="text-destructive">*</span>
-          </label>
-          <select
-            {...register('ownerId')}
-            className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2"
-          >
-            <option value="">— Sélectionner un utilisateur —</option>
-            {availableOwners.map((u) => (
-              <option key={u.id} value={u.id}>
-                {u.name} ({u.email})
-              </option>
-            ))}
-          </select>
+          <h2 className='text-m font-medium'>Proprietaire</h2>
+          <div className="flex flex-row gap-4 w-full">
+
+          <div className="flex flex-col w-full">
+            <label className="text-sm font-medium">
+              Prénom <span className="text-destructive">*</span>
+            </label>
+            <input
+              {...register('address.street')}
+              placeholder="ex. 12 Rue de Rivoli, 75001 Paris, France"
+              className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
+              />
+           </div>
+           <div className="flex flex-col w-full">
+            <label className="text-sm font-medium">
+              Nom <span className="text-destructive">*</span>
+            </label>
+            
+            <input
+              {...register('address.street')}
+              placeholder="ex. 12 Rue de Rivoli, 75001 Paris, France"
+              className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
+              />
+           </div>
+            </div>
+           <div className="flex flex-col w-full">
+            <label className="text-sm font-medium">
+              Email <span className="text-destructive">*</span>
+            </label>
+            <input
+              {...register('address.street')}
+              placeholder="ex. 12 Rue de Rivoli, 75001 Paris, France"
+              className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
+              />
+           </div>
           {errors.ownerId && <p className="text-xs text-destructive">{errors.ownerId.message}</p>}
           <p className="text-xs text-muted-foreground">
             L'owner aura un accès complet à l'espace de cette company.

@@ -44,7 +44,7 @@ const scanBarOptions = {
 }
 
 const rolesDoughnutData = {
-  labels: ['Owner', 'Admin entreprise', 'Super Admin'],
+  labels: ['Employé', 'Candidat', 'Entreprise'],
   datasets: [
     {
       data: [34, 126, 3],

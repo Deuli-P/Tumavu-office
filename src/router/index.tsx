@@ -8,6 +8,7 @@ import RootRedirect from './rootRedirect'
 import { LoginPage } from '@/pages/auth/login/auth.page'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { AdminDashboardPage } from '@/pages/dashboard/dashboard.page'
+import CompaniePage from '@/pages/companies/companie.page'
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <AdminDashboardPage /> },
           { path: 'companies', element: <CompaniesPage /> },
+          { path: 'companies/:id', element: <CompaniePage /> },
           { path: 'companies/new', element: <AdminCreateCompanyPage /> },
           { path: 'users', element: <AdminUsersPage /> },
         ],
