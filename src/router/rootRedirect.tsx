@@ -9,7 +9,7 @@ const RootRedirect = () => {
   if (isInitializing) return null
 
   if (!token) {
-    return <Navigate replace to="/auth/login/choice" />
+    return <Navigate replace to="/auth/login" />
   }
 
   return <Navigate replace to={user?.info?.role?.type === 'ADMIN' ? '/admin' : '/app'} />

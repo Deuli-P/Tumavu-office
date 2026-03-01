@@ -25,7 +25,7 @@ export function Sidebar() {
   
   function handleLogout() {
     logout()
-    navigate('/auth/login/choice')
+    navigate('/auth/login')
   }
 
   return (
