@@ -5,7 +5,6 @@ import type { User } from '@/types/auth.types'
 const backendUrl = import.meta.env.VITE_API_BASE_URL
 
 type AuthState = {
-  token: string | null
   user: User | null
   isLogged: boolean
   isInitializing: boolean
@@ -19,7 +18,6 @@ export const useAuthStore = create<AuthState>()(
   devtools(
     persist(
       (set, get) => ({
-        token: null,
         user: null,
         isLogged: false,
         isInitializing: true,
@@ -27,8 +25,8 @@ export const useAuthStore = create<AuthState>()(
         // Appelé après login : stocke token + user en mémoire
         // Le cookie HttpOnly est posé automatiquement par le navigateur
         // via le Set-Cookie de la réponse serveur (credentials: 'include' côté page de login)
-        setAuth: ({ token, user }) => {
-          set({ token, user, isLogged: true })
+        setAuth: ({ user }) => {
+          set({  user, isLogged: true })
         },
 
         logout: async () => {
@@ -63,7 +61,7 @@ export const useAuthStore = create<AuthState>()(
 
 
               console.log('form is valid, sending request', {email, password});
-              const response = await fetch(`${backendUrl}/auth/login`, {
+              const response = await fetch(`${backendUrl}/auth/login/admin`, {
                   method: 'POST',
                   credentials: 'include',
                   headers: {
@@ -78,7 +76,8 @@ export const useAuthStore = create<AuthState>()(
               if (!response.ok) {
                   throw new Error('Erreur lors de la connexion');
               }
-              // On reçoi un cookie httpOnly c'est tout 
+
+              get().initSession()
           }
           catch(error){
             console.error('Erreur lors de la connexion en tant qu\'admin :', error);
@@ -88,7 +87,7 @@ export const useAuthStore = create<AuthState>()(
 
         initSession: async () => {
           try {
-            const response = await fetch(`${backendUrl}/auth/me`, {
+            const response = await fetch(`${backendUrl}/auth/me-admin`, {
               method: 'GET',
               credentials: 'include', // envoie le cookie HttpOnly au serveur
               headers: {
@@ -98,15 +97,15 @@ export const useAuthStore = create<AuthState>()(
             })
 
             if (!response.ok) {
-              set({ isLogged: false, token: null, user: null })
+              set({ isLogged: false, user: null })
               return
             }
 
-            const { userLogged, token } = await response.json()
-            set({ isLogged: true, user: userLogged, ...(token ? { token } : {}) })
+            const data = await response.json()
+            set({ isLogged: true, user: data })
           } catch (e) {
             console.log('initSession error:', e)
-            set({ isLogged: false, token: null, user: null })
+            set({ isLogged: false, user: null })
           } finally {
             set({ isInitializing: false })
           }

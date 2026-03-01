@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { AdminCompaniesPage } from '@/pages/companies/companies.page'
+import { CompaniesPage } from '@/pages/companies/companies.page'
 import { AdminCreateCompanyPage } from '@/pages/companies/create-company.page'
 import { AdminUsersPage } from '@/pages/users/users.page'
 import GuestOnlyLayout from './guest'
 import AuthOnlyLayout from './logged'
 import RootRedirect from './rootRedirect'
-import { LoginAdminPage } from '@/pages/auth/login/admin.page'
+import { LoginPage } from '@/pages/auth/login/auth.page'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { AdminDashboardPage } from '@/pages/dashboard/dashboard.page'
 
@@ -18,7 +18,8 @@ export const router = createBrowserRouter([
     path: '/auth/login',
     element: <GuestOnlyLayout />,
     children: [
-      { path: 'admin', element: <LoginAdminPage />, index: true }
+      { index: true, element: <LoginPage /> },
+      { path: 'admin', element: <LoginPage /> },
     ],
   },
   // Espace authentifié
@@ -30,7 +31,7 @@ export const router = createBrowserRouter([
         element: <Sidebar />,
         children: [
           { index: true, element: <AdminDashboardPage /> },
-          { path: 'companies', element: <AdminCompaniesPage /> },
+          { path: 'companies', element: <CompaniesPage /> },
           { path: 'companies/new', element: <AdminCreateCompanyPage /> },
           { path: 'users', element: <AdminUsersPage /> },
         ],

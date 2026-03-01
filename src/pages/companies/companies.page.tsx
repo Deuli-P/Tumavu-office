@@ -11,7 +11,7 @@ const mockCompanies: Company[] = [
   { id: 'c6', name: 'GreenPulse', address: '27 Rue Saint-Ferréol, 13001 Marseille', description: 'Énergies renouvelables et RSE', ownerId: 'u6', ownerName: 'Amina Diallo', jobsCount: 4, usersCount: 3, createdAt: '2026-01-28' },
 ]
 
-export function AdminCompaniesPage() {
+export function CompaniesPage() {
   return (
     <div className="p-8">
       <div className="flex items-center justify-between mb-6">
@@ -20,7 +20,7 @@ export function AdminCompaniesPage() {
           <p className="text-sm text-muted-foreground mt-1">{mockCompanies.length} companies enregistrées</p>
         </div>
         <Link
-          to="/admin/companies/new"
+          to="/app/companies/new"
           className="flex items-center gap-2 rounded-lg bg-destructive px-4 py-2 text-sm font-medium text-white hover:bg-destructive/90 transition-colors"
         >
           <Plus className="h-4 w-4" />

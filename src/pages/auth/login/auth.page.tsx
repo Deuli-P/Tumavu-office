@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuthStore } from '@/store/auth.store'
 import { Building2 } from 'lucide-react';
 
-export function LoginAdminPage() {
+export function LoginPage() {
   const { signIn } = useAuthStore()
   const [ loading, setLoading ] = useState<boolean>(false);
 

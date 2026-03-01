@@ -127,7 +127,7 @@ export function AdminDashboardPage() {
         <div className="flex items-center justify-between px-6 py-4 border-b">
           <h2 className="font-semibold">Dernières companies inscrites</h2>
           <Link
-            to="/admin/companies/new"
+            to="/app/companies/new"
             className="rounded-lg bg-destructive px-3 py-1.5 text-xs font-medium text-white hover:bg-destructive/90 transition-colors"
           >
             + Nouvelle company
@@ -137,7 +137,7 @@ export function AdminDashboardPage() {
           {recentCompanies.map((company) => (
             <Link
               key={company.id}
-              to="/admin/companies"
+              to="/app/companies"
               className="flex items-center justify-between px-6 py-4 hover:bg-muted/40 transition-colors"
             >
               <div className="flex items-center gap-3">

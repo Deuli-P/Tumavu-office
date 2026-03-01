@@ -38,7 +38,7 @@ export function AdminCreateCompanyPage() {
   function onSubmit(data: FormValues) {
     console.log('Create company:', data)
     // TODO: appel API
-    navigate('/admin/companies')
+    navigate('/app/companies')
   }
 
   return (
