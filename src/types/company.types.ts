@@ -1,13 +1,15 @@
-export interface Company {
+export interface CompanyListItem {
   id: string
   name: string
-  address: string
-  description?: string
-  ownerId: string
-  ownerName: string
-  jobsCount: number
-  usersCount: number
+  type: string | null
   createdAt: string
+  address: {
+    locality: string
+    country: { id: number; name: string; code: string }
+  }
+  station: { id: number; name: string }
+  owner: { id: string; firstName: string; lastName: string }
+  _count: { jobs: number; announcements: number }
 }
 
 export interface Station {
@@ -25,9 +27,21 @@ export interface Station {
   }
 }
 
-export interface CreateCompanyPayload {
+export interface CreateCompanyWithOwnerPayload {
   name: string
-  address: string
   description?: string
-  ownerId: string
+  phone?: string
+  type?: string
+  address: {
+    street: string
+    number?: string
+    locality: string
+    countryId: number
+  }
+  stationId: number
+  owner: {
+    firstName: string
+    lastName: string
+    email: string
+  }
 }

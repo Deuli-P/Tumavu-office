@@ -1,35 +1,47 @@
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Plus, MapPin, Briefcase, Users, File } from 'lucide-react'
-import type { Company } from '@/types/company.types'
-import { companies } from '@/data/companies'
+import { Plus, MapPin, Briefcase, File } from 'lucide-react'
+import type { CompanyListItem } from '@/types/company.types'
+import { useUtils } from '@/store/utils.store'
+import { MultiSelect } from '@/components/ui/multi-select'
 
-const mockCompanies: Company[] = [
-  { id: 'c1', name: 'Acme Corp', address: '12 Rue de Rivoli, 75001 Paris', description: 'Leader en solutions logistiques', ownerId: 'u1', ownerName: 'Jean Dupont', jobsCount: 12, usersCount: 8, createdAt: '2026-02-20' },
-  { id: 'c2', name: 'TechFlow SAS', address: '8 Place Bellecour, 69002 Lyon', description: 'Startup SaaS B2B', ownerId: 'u2', ownerName: 'Claire Martin', jobsCount: 5, usersCount: 3, createdAt: '2026-02-18' },
-  { id: 'c3', name: 'Medilab', address: '5 Cours de l\'Intendance, 33000 Bordeaux', description: 'Laboratoires d\'analyses médicales', ownerId: 'u3', ownerName: 'Pierre Bernard', jobsCount: 9, usersCount: 6, createdAt: '2026-02-15' },
-  { id: 'c4', name: 'BuildSmart', address: '2 Quai de la Fosse, 44000 Nantes', description: 'Construction et BTP innovant', ownerId: 'u4', ownerName: 'Sophie Leclerc', jobsCount: 3, usersCount: 2, createdAt: '2026-02-10' },
-  { id: 'c5', name: 'DataNest', address: 'Remote — France entière', description: 'Data engineering et BI', ownerId: 'u5', ownerName: 'Karim Benali', jobsCount: 7, usersCount: 5, createdAt: '2026-02-05' },
-  { id: 'c6', name: 'GreenPulse', address: '27 Rue Saint-Ferréol, 13001 Marseille', description: 'Énergies renouvelables et RSE', ownerId: 'u6', ownerName: 'Amina Diallo', jobsCount: 4, usersCount: 3, createdAt: '2026-01-28' },
-]
+const backendUrl = import.meta.env.VITE_API_BASE_URL
 
-export function CompaniesPage() {
+const CompaniesPage = () => {
+  const navigate = useNavigate()
+  const { countries, stations } = useUtils()
 
-  const navigate= useNavigate();
+  const [companies, setCompanies] = useState<CompanyListItem[]>([])
+  const [loading, setLoading] = useState(true)
 
+  const [selectedCountries, setSelectedCountries] = useState<(string | number)[]>([])
+  const [selectedStations, setSelectedStations] = useState<(string | number)[]>([])
 
-  const handleNavigateToCompany = (companyId: string) => {
-    // Logique de navigation vers la page de détails de la company
-    console.log(`Navigating to company with ID: ${companyId}`);
-    navigate(`/app/companies/${companyId}`);
-  }
+  useEffect(() => {
+    fetch(`${backendUrl}/company/admin`, { credentials: 'include' })
+      .then((r) => (r.ok ? r.json() : []))
+      .then((d) => setCompanies(Array.isArray(d) ? d : []))
+      .catch(() => setCompanies([]))
+      .finally(() => setLoading(false))
+  }, [])
 
+  const filtered = companies.filter((c) => {
+    if (selectedCountries.length > 0 && !selectedCountries.includes(c.address.country.id)) return false
+    if (selectedStations.length > 0 && !selectedStations.includes(c.station.id)) return false
+    return true
+  })
+
+  const countryOptions = countries.map((c) => ({ value: c.id, label: `${c.name} (${c.code})` }))
+  const stationOptions = stations.map((s) => ({ value: s.id, label: s.name }))
 
   return (
     <div className="p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold">Companies</h1>
-          <p className="text-sm text-muted-foreground mt-1">{mockCompanies.length} companies enregistrées</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            {loading ? '...' : `${filtered.length} / ${companies.length} companies`}
+          </p>
         </div>
         <Link
           to="/app/companies/new"
@@ -40,52 +52,85 @@ export function CompaniesPage() {
         </Link>
       </div>
 
+      {/* Filtres */}
+      <div className="flex gap-3 mb-5">
+        <MultiSelect
+          options={countryOptions}
+          selected={selectedCountries}
+          onChange={setSelectedCountries}
+          placeholder="Filtrer par pays"
+          className="w-64"
+        />
+        <MultiSelect
+          options={stationOptions}
+          selected={selectedStations}
+          onChange={setSelectedStations}
+          placeholder="Filtrer par station"
+          className="w-64"
+        />
+      </div>
+
       <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b bg-muted/40">
               <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Entreprise</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Proprietaire</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Station</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Propriétaire</th>
               <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Annonces</th>
               <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jobs</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Employés</th>
               <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ajouté le</th>
             </tr>
           </thead>
           <tbody className="divide-y">
-            {companies.map((company) => (
-              <tr key={company.id} className="hover:bg-muted/30 transition-colors cursor-pointer"  onClick={() => handleNavigateToCompany(company.id)}>
+            {loading && (
+              <tr>
+                <td colSpan={6} className="px-6 py-8 text-center text-sm text-muted-foreground">
+                  Chargement...
+                </td>
+              </tr>
+            )}
+            {!loading && filtered.length === 0 && (
+              <tr>
+                <td colSpan={6} className="px-6 py-8 text-center text-sm text-muted-foreground">
+                  Aucune company trouvée.
+                </td>
+              </tr>
+            )}
+            {filtered.map((company) => (
+              <tr
+                key={company.id}
+                className="hover:bg-muted/30 transition-colors cursor-pointer"
+                onClick={() => navigate(`/app/companies/${company.id}`)}
+              >
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-destructive/10 text-sm font-bold text-destructive shrink-0">
-                      {company.name}
+                      {company.name.charAt(0).toUpperCase()}
                     </div>
                     <div>
                       <p className="font-medium">{company.name}</p>
                       <p className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
                         <MapPin className="h-3 w-3 shrink-0" />
-                        {company.address.city}, {company.address.country}
+                        {company.address.locality}, {company.address.country.name}
                       </p>
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-sm text-muted-foreground">{company.owner.firstName.charAt(0)}. {company.owner.lastName}</td>
+                <td className="px-6 py-4 text-sm text-muted-foreground">{company.station.name}</td>
+                <td className="px-6 py-4 text-sm text-muted-foreground">
+                  {company.owner.firstName.charAt(0)}. {company.owner.lastName}
+                </td>
                 <td className="px-6 py-4">
                   <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                     <File className="h-3.5 w-3.5" />
-                    {company.annoucments.length}
+                    {company._count.announcements}
                   </span>
                 </td>
                 <td className="px-6 py-4">
                   <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                     <Briefcase className="h-3.5 w-3.5" />
-                    {company.jobs.length}
-                  </span>
-                </td>
-                <td className="px-6 py-4">
-                  <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                    <Users className="h-3.5 w-3.5" />
-                    {company.employes.length}
+                    {company._count.jobs}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-sm text-muted-foreground">
@@ -99,3 +144,5 @@ export function CompaniesPage() {
     </div>
   )
 }
+
+export default CompaniesPage

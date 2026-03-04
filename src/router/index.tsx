@@ -1,7 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { CompaniesPage } from '@/pages/companies/companies.page'
+import  CompaniesPage  from '@/pages/companies/companies.page'
 import { AdminCreateCompanyPage } from '@/pages/companies/create-company.page'
 import { AdminUsersPage } from '@/pages/users/users.page'
+import { StationsPage } from '@/pages/stations/stations.page'
+import { CreateStationPage } from '@/pages/stations/create-station.page'
+import { StationDetailPage } from '@/pages/stations/station-detail.page'
+import { PermissionsPage } from '@/pages/permissions/permissions.page'
+import { AnnoncesPage } from '@/pages/annonces/annonces.page'
 import GuestOnlyLayout from './guest'
 import AuthOnlyLayout from './logged'
 import RootRedirect from './rootRedirect'
@@ -36,6 +41,11 @@ export const router = createBrowserRouter([
           { path: 'companies/:id', element: <CompaniePage /> },
           { path: 'companies/new', element: <AdminCreateCompanyPage /> },
           { path: 'users', element: <AdminUsersPage /> },
+          { path: 'stations', element: <StationsPage /> },
+          { path: 'stations/new', element: <CreateStationPage /> },
+          { path: 'stations/:id', element: <StationDetailPage /> },
+          { path: 'permissions', element: <PermissionsPage /> },
+          { path: 'annonces', element: <AnnoncesPage /> },
         ],
       },
     ],

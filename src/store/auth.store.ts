@@ -47,7 +47,6 @@ export const useAuthStore = create<AuthState>()(
 
         signIn: async (as: 'ADMIN' | 'MANAGER', email: string, password: string)=> {
             try{
-              console.log('start sign in')
               if(email === '' || password === ''){
                   throw new Error('Email et mot de passe sont requis');
               };
@@ -60,7 +59,6 @@ export const useAuthStore = create<AuthState>()(
 
 
 
-              console.log('form is valid, sending request', {email, password});
               const response = await fetch(`${backendUrl}/auth/login/admin`, {
                   method: 'POST',
                   credentials: 'include',
