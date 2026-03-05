@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "companies": "Companies",
+    "stations": "Stations",
+    "users": "Users",
+    "permissions": "Permissions",
+    "annonces": "Job Posts",
+    "tags": "Tags",
+    "candidatures": "Applications"
+  },
+  "actions": {
+    "logout": "Sign out",
+    "back": "Back",
+    "create": "Create",
+    "add": "Add",
+    "remove": "Remove",
+    "save": "Save",
+    "cancel": "Cancel",
+    "new": "New",
+    "optionnal": "Optional"
+  },
+  "state": {
+    "loading": "Loading...",
+    "noData": "No data",
+    "error": "An error occurred",
+    "notFound": "Not found"
+  },
+  "status": {
+    "ACTIVE": "Active",
+    "CLOSED": "Closed",
+    "CANCELLED": "Cancelled"
+  },
+  "appStatus": {
+    "CONFIRMED": "Confirmed",
+    "REFUSED": "Refused",
+    "INTERVIEW": "Interview",
+    "SIGNATURE": "Signature",
+    "CANCELLED": "Cancelled"
+  },
+  "role": {
+    "all": "All",
+    "owner": "Owner (company)",
+    "user": "Simple user",
+    "MANAGER": "Owner",
+    "USER": "User"
+  },
+  "superAdmin": "Super Admin",
+  "filter": {
+    "byCountry": "Filter by country",
+    "byStation": "Filter by station",
+    "byTag": "Filter by tag",
+    "lastLogin": "Last login"
+  },
+  "table": {
+    "date": "Date",
+    "actions": "Actions"
+  },
+  "lang": {
+    "fr": "Français",
+    "en": "English"
+  }
+}

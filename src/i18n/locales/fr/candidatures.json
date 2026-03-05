@@ -1,0 +1,18 @@
+{
+  "title": "Candidatures",
+  "subtitle_one": "{{count}} candidature",
+  "subtitle_other": "{{count}} candidatures",
+  "noResults": "Aucune candidature trouvée.",
+  "filter": {
+    "status": "Filtrer par statut",
+    "all": "Tous les statuts"
+  },
+  "table": {
+    "candidate": "Candidat",
+    "announcement": "Annonce",
+    "company": "Entreprise",
+    "station": "Station",
+    "status": "Statut",
+    "date": "Date"
+  }
+}

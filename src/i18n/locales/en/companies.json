@@ -1,0 +1,83 @@
+{
+  "title": "Companies",
+  "subtitle_one": "{{count}} company",
+  "subtitle_other": "{{count}} companies",
+  "new": "New company",
+  "noCompanies": "No companies found.",
+  "table": {
+    "name": "Name",
+    "station": "Station",
+    "address": "Address",
+    "owner": "Owner",
+    "createdAt": "Registered on",
+    "announcements": "Job posts",
+    "jobs": "Jobs",
+    "addedAt": "Added on"
+  },
+  "detail": {
+    "back": "Back to companies",
+    "owner": "Owner",
+    "station": "Station",
+    "address": "Address",
+    "phone": "Phone",
+    "passagesWeek": "Passages this week",
+    "passagesMonth": "Passages this month",
+    "jobs": "Job postings",
+    "announcements": "Announcements",
+    "noJobs": "No job postings.",
+    "noAnnouncements": "No announcements.",
+    "table": {
+      "title": "Title",
+      "contract": "Contract",
+      "status": "Status",
+      "tags": "Tags",
+      "applications": "Applications",
+      "postedAt": "Posted on",
+      "job": "Job"
+    }
+  },
+  "create": {
+    "title": "Create a company",
+    "subtitle": "Fill in the new company and owner details.",
+    "section": {
+      "company": "Company information",
+      "address": "Address",
+      "owner": {
+        "title": "Owner",
+        "description": "The owner of the company will have access to their dashboard to manage"
+      }
+    },
+    "field": {
+      "name": "Company name",
+      "description": "Description",
+      "phone": "Phone",
+      "type": "Type",
+      "station": "Station",
+      "street": "Street",
+      "number": "Number",
+      "locality": "City",
+      "country": "Country",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email"
+    },
+    "submit": "Create company",
+    "submitting": "Creating…",
+    "success": "Company created successfully.",
+    "error": "Error creating company.",
+    "placeholder": {
+      "name": "Ex: Café du coin",
+      "description": "Ex: A cozy little café in the heart of the city.",
+      "phone": "Ex: +33 1 23 45 67 89",
+      "type": "Ex: Restaurant, Commerce, Service, etc.",
+      "station": "Select a station",
+      "street": "Ex: Rue de la Paix",
+      "number": "Ex: 123",
+      "locality": "Ex: Paris",
+      "country": "Select a country",
+      "firstName": "Ex: John",
+      "lastName": "Ex: Doe",
+      "email": "Ex: john.doe@example.com"
+    }
+  }
+}

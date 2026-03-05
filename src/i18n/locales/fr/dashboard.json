@@ -1,0 +1,28 @@
+{
+  "title": "Vue plateforme",
+  "subtitle": "Statistiques globales de Tumavu",
+  "stats": {
+    "companies": "Entreprises totales",
+    "companiesThisMonth": "+{{count}} ce mois",
+    "announcements": "Annonces totales",
+    "announcementsSub": "sur toute la plateforme",
+    "activeUsers": "Utilisateurs actifs",
+    "activeUsersSub": "connectés ce mois",
+    "newUsers": "Nouveaux inscrits",
+    "newUsersSub": "ce mois-ci"
+  },
+  "charts": {
+    "passages": "Passages par mois",
+    "passagesSub": "12 derniers mois",
+    "roles": "Répartition des rôles",
+    "rolesSub": "Tous utilisateurs (hors admins)"
+  },
+  "recentCompanies": {
+    "title": "Dernières entreprises inscrites",
+    "new": "+ Nouvelle entreprise",
+    "announcements_one": "{{count}} annonce",
+    "announcements_other": "{{count}} annonces",
+    "passages_one": "{{count}} passage",
+    "passages_other": "{{count}} passages"
+  }
+}

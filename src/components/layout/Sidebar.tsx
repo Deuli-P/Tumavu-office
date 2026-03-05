@@ -1,20 +1,10 @@
 import { useEffect } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, Building2, Users, LogOut, ShieldCheck, MapPin, KeyRound, Megaphone } from 'lucide-react'
+import { LayoutDashboard, Building2, Users, LogOut, ShieldCheck, MapPin, KeyRound, Megaphone, Languages, Tag, ClipboardList } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '@/store/auth.store'
 import { useUtils } from '@/store/utils.store'
 import { cn } from '@/lib/utils'
-
-
-
-const navItems = [
-  { to: '/app', label: 'Dashboard', icon: LayoutDashboard, end: true },
-  { to: '/app/companies', label: 'Companies', icon: Building2 },
-  { to: '/app/stations', label: 'Stations', icon: MapPin },
-  { to: '/app/users', label: 'Utilisateurs', icon: Users },
-  { to: '/app/permissions', label: 'Permissions', icon: KeyRound },
-  { to: '/app/annonces', label: 'Annonces', icon: Megaphone },
-];
 
 
 export function Sidebar() {
@@ -22,15 +12,30 @@ export function Sidebar() {
   const logout = useAuthStore((s) => s.logout)
   const navigate = useNavigate()
   const initUtils = useUtils((s) => s.init)
+  const { t, i18n } = useTranslation('common')
+
+  const navItems = [
+    { to: '/app', label: t('nav.dashboard'), icon: LayoutDashboard, end: true },
+    { to: '/app/companies', label: t('nav.companies'), icon: Building2 },
+    { to: '/app/stations', label: t('nav.stations'), icon: MapPin },
+    { to: '/app/users', label: t('nav.users'), icon: Users },
+    { to: '/app/permissions', label: t('nav.permissions'), icon: KeyRound },
+    { to: '/app/annonces', label: t('nav.annonces'), icon: Megaphone },
+    { to: '/app/tags', label: t('nav.tags'), icon: Tag },
+    { to: '/app/candidatures', label: t('nav.candidatures'), icon: ClipboardList },
+  ]
 
   useEffect(() => {
     initUtils()
   }, [])
-  
-  
+
   function handleLogout() {
     logout()
     navigate('/auth/login')
+  }
+
+  function toggleLang() {
+    i18n.changeLanguage(i18n.language === 'fr' ? 'en' : 'fr')
   }
 
   return (
@@ -71,18 +76,25 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* User */}
-      <div className="border-t px-3 py-4">
+      {/* User + lang */}
+      <div className="border-t px-3 py-4 space-y-1">
         <div className="mb-2 px-3">
           <p className="text-xs font-medium">{user?.info.firstName} {user?.info.lastName}</p>
           <p className="text-xs text-muted-foreground truncate">{user?.info.email ?? ''}</p>
         </div>
         <button
+          onClick={toggleLang}
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted"
+        >
+          <Languages className="h-4 w-4" />
+          {i18n.language === 'fr' ? t('lang.en') : t('lang.fr')}
+        </button>
+        <button
           onClick={handleLogout}
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
         >
           <LogOut className="h-4 w-4" />
-          Se déconnecter
+          {t('actions.logout')}
         </button>
       </div>
     </aside>

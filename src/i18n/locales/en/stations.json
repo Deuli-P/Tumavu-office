@@ -1,0 +1,43 @@
+{
+  "title": "Stations",
+  "subtitle": "Manage platform stations and their reference offices.",
+  "new": "New station",
+  "noStations": "No stations registered.",
+  "createFirst": "Create the first station",
+  "create": {
+    "title": "Create a station",
+    "field": {
+      "name": "Station name",
+      "country": "Country",
+      "street": "Street",
+      "number": "Number",
+      "locality": "City"
+    },
+    "section": {
+      "officeAddress": "Reference office address"
+    },
+    "submit": "Create station",
+    "submitting": "Creating…",
+    "success": "Station created successfully.",
+    "error": "Error creating station."
+  },
+  "detail": {
+    "back": "Back to stations",
+    "kpi": {
+      "companies": "Companies",
+      "workers": "Confirmed workers",
+      "weekPassages": "Passages this week",
+      "monthPassages": "Passages this month"
+    },
+    "companies": "Companies ({{count}})",
+    "noCompanies": "No companies linked.",
+    "recentAnnouncements": "Recent job posts",
+    "noAnnouncements": "No job posts.",
+    "applications_one": "{{count}} application",
+    "applications_other": "{{count}} applications",
+    "announcements_one": "{{count}} job post",
+    "announcements_other": "{{count}} job posts",
+    "passages_one": "{{count}} passage",
+    "passages_other": "{{count}} passages"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "title": "Utilisateurs",
+  "subtitle_one": "{{count}} utilisateur",
+  "subtitle_other": "{{count}} utilisateurs",
+  "noUsers": "Aucun utilisateur trouvé.",
+  "table": {
+    "user": "Utilisateur",
+    "role": "Rôle",
+    "country": "Pays",
+    "company": "Company",
+    "createdAt": "Inscrit le",
+    "lastLogin": "Dernière connexion"
+  }
+}

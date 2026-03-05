@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Plus, X, ShieldCheck } from 'lucide-react'
 import type { PermissionItem, RoleWithPermissions } from '@/types/admin.types'
 
@@ -10,7 +11,14 @@ const roleTypeColor: Record<string, string> = {
   USER: 'bg-gray-100 text-gray-600',
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function permLabel(value: string, t: (key: string, opts: any) => string) {
+  return t(`permissions.${value}`, { defaultValue: value })
+}
+
 export function PermissionsPage() {
+  const { t } = useTranslation('permissions')
+  const { t: tc } = useTranslation('common')
   const [permissions, setPermissions] = useState<PermissionItem[]>([])
   const [roles, setRoles] = useState<RoleWithPermissions[]>([])
   const [loading, setLoading] = useState(true)
@@ -77,15 +85,15 @@ export function PermissionsPage() {
   return (
     <div className="p-8 max-w-5xl">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Permissions</h1>
-        <p className="text-sm text-muted-foreground mt-1">Gérez les permissions et leur attribution aux rôles.</p>
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
+        <p className="text-sm text-muted-foreground mt-1">{t('subtitle')}</p>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
         {/* ── Liste des permissions ── */}
         <div className="space-y-4">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-            Permissions ({permissions.length})
+            {t('list.title')} ({permissions.length})
           </h2>
 
           {/* Formulaire création */}
@@ -93,7 +101,7 @@ export function PermissionsPage() {
             <input
               value={newValue}
               onChange={(e) => setNewValue(e.target.value)}
-              placeholder="ex. read:announcements"
+              placeholder={t('create.placeholder')}
               className="flex-1 rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground font-mono"
             />
             <button
@@ -102,21 +110,22 @@ export function PermissionsPage() {
               className="flex items-center gap-1.5 rounded-lg bg-destructive px-3 py-2 text-sm font-medium text-white hover:bg-destructive/90 disabled:opacity-50 transition-colors"
             >
               <Plus className="h-4 w-4" />
-              Créer
+              {t('create.button')}
             </button>
           </form>
           {createError && <p className="text-xs text-destructive">{createError}</p>}
 
           {/* Liste */}
           <div className="rounded-xl border bg-white shadow-sm divide-y overflow-hidden">
-            {loading && <p className="px-4 py-6 text-sm text-muted-foreground text-center">Chargement...</p>}
+            {loading && <p className="px-4 py-6 text-sm text-muted-foreground text-center">{tc('state.loading')}</p>}
             {!loading && permissions.length === 0 && (
-              <p className="px-4 py-6 text-sm text-muted-foreground text-center">Aucune permission.</p>
+              <p className="px-4 py-6 text-sm text-muted-foreground text-center">{t('list.empty')}</p>
             )}
             {permissions.map((perm) => (
               <div key={perm.id} className="flex items-start justify-between gap-3 px-4 py-3">
                 <div>
-                  <p className="font-mono text-sm font-medium">{perm.value}</p>
+                  <p className="text-sm font-medium">{permLabel(perm.value, t)}</p>
+                  <p className="text-xs text-muted-foreground font-mono">{perm.value}</p>
                   <div className="mt-1 flex flex-wrap gap-1">
                     {perm.roles.map((r) => (
                       <span key={r.id} className={`rounded-full px-2 py-0.5 text-xs font-medium ${roleTypeColor[r.type] ?? 'bg-gray-100 text-gray-600'}`}>
@@ -137,7 +146,7 @@ export function PermissionsPage() {
         {/* ── Rôles & assignation ── */}
         <div className="space-y-4">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-            Rôles & assignation
+            {t('roles.title')}
           </h2>
 
           {roles.map((role) => {
@@ -155,13 +164,14 @@ export function PermissionsPage() {
                 {/* Permissions assignées */}
                 <div className="px-4 py-3 space-y-1.5 min-h-[48px]">
                   {role.permissions.length === 0 && (
-                    <p className="text-xs text-muted-foreground italic">Aucune permission assignée.</p>
+                    <p className="text-xs text-muted-foreground italic">{t('roles.noPermissions')}</p>
                   )}
                   {role.permissions.map((perm) => {
                     const key = `${role.id}-${perm.id}`
                     return (
                       <div key={perm.id} className="flex items-center justify-between gap-2 rounded-md bg-muted/50 px-2.5 py-1.5 text-xs">
-                        <span className="font-mono">{perm.value}</span>
+                        <span>{permLabel(perm.value, t)}</span>
+                        <span className="font-mono text-muted-foreground/60">{perm.value}</span>
                         <button
                           onClick={() => handleRemove(role.id, perm.id)}
                           disabled={assigning === key}
@@ -187,9 +197,9 @@ export function PermissionsPage() {
                       }}
                       className="w-full rounded-lg border bg-white px-3 py-1.5 text-xs outline-none ring-ring focus:ring-2 font-mono"
                     >
-                      <option value="">+ Ajouter une permission...</option>
+                      <option value="">{t('roles.addPlaceholder')}</option>
                       {unassigned.map((p) => (
-                        <option key={p.id} value={p.id}>{p.value}</option>
+                        <option key={p.id} value={p.id}>{permLabel(p.value, t)}</option>
                       ))}
                     </select>
                   </div>

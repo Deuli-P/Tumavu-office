@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Plus, MapPin, Briefcase, File } from 'lucide-react'
 import type { CompanyListItem } from '@/types/company.types'
 import { useUtils } from '@/store/utils.store'
@@ -9,6 +10,9 @@ const backendUrl = import.meta.env.VITE_API_BASE_URL
 
 const CompaniesPage = () => {
   const navigate = useNavigate()
+  const { t } = useTranslation('companies')
+  const { t: tc } = useTranslation('common')
+  const { i18n } = useTranslation()
   const { countries, stations } = useUtils()
 
   const [companies, setCompanies] = useState<CompanyListItem[]>([])
@@ -38,9 +42,9 @@ const CompaniesPage = () => {
     <div className="p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Companies</h1>
+          <h1 className="text-2xl font-bold">{t('title')}</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            {loading ? '...' : `${filtered.length} / ${companies.length} companies`}
+            {loading ? tc('state.loading') : t('subtitle', { count: filtered.length })}
           </p>
         </div>
         <Link
@@ -48,7 +52,7 @@ const CompaniesPage = () => {
           className="flex items-center gap-2 rounded-lg bg-destructive px-4 py-2 text-sm font-medium text-white hover:bg-destructive/90 transition-colors"
         >
           <Plus className="h-4 w-4" />
-          Nouvelle company
+          {t('new')}
         </Link>
       </div>
 
@@ -58,14 +62,14 @@ const CompaniesPage = () => {
           options={countryOptions}
           selected={selectedCountries}
           onChange={setSelectedCountries}
-          placeholder="Filtrer par pays"
+          placeholder={tc('filter.byCountry')}
           className="w-64"
         />
         <MultiSelect
           options={stationOptions}
           selected={selectedStations}
           onChange={setSelectedStations}
-          placeholder="Filtrer par station"
+          placeholder={tc('filter.byStation')}
           className="w-64"
         />
       </div>
@@ -74,26 +78,26 @@ const CompaniesPage = () => {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b bg-muted/40">
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Entreprise</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Station</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Propriétaire</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Annonces</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Jobs</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Ajouté le</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.name')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.station')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.owner')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.announcements')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.jobs')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.addedAt')}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
             {loading && (
               <tr>
                 <td colSpan={6} className="px-6 py-8 text-center text-sm text-muted-foreground">
-                  Chargement...
+                  {tc('state.loading')}
                 </td>
               </tr>
             )}
             {!loading && filtered.length === 0 && (
               <tr>
                 <td colSpan={6} className="px-6 py-8 text-center text-sm text-muted-foreground">
-                  Aucune company trouvée.
+                  {t('noCompanies')}
                 </td>
               </tr>
             )}
@@ -134,7 +138,7 @@ const CompaniesPage = () => {
                   </span>
                 </td>
                 <td className="px-6 py-4 text-sm text-muted-foreground">
-                  {new Date(company.createdAt).toLocaleDateString('fr-FR')}
+                  {new Date(company.createdAt).toLocaleDateString(i18n.language === 'fr' ? 'fr-FR' : 'en-GB')}
                 </td>
               </tr>
             ))}

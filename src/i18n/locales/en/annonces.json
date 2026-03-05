@@ -1,0 +1,22 @@
+{
+  "title": "Job Posts",
+  "subtitle_one": "{{count}} job post",
+  "subtitle_other": "{{count}} job posts",
+  "noAnnouncements": "No job posts.",
+  "table": {
+    "title": "Title",
+    "job": "Job",
+    "tags": "Tags",
+    "company": "Company",
+    "station": "Station",
+    "status": "Status",
+    "publishedAt": "Published on",
+    "applications": "Applications"
+  },
+  "drawer": {
+    "publishedOn": "Published on {{date}}",
+    "applicants": "Applicants ({{count}})",
+    "noApplicants": "No applicants yet.",
+    "appliedOn": "Applied on {{date}}"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Platform overview",
+  "subtitle": "Global Tumavu statistics",
+  "stats": {
+    "companies": "Companies",
+    "companiesThisMonth": "+{{count}} this month",
+    "announcements": "Total job posts",
+    "announcementsSub": "across the platform",
+    "activeUsers": "Active users",
+    "activeUsersSub": "logged in this month",
+    "newUsers": "New sign-ups",
+    "newUsersSub": "this month"
+  },
+  "charts": {
+    "passages": "Monthly passages",
+    "passagesSub": "Last 12 months",
+    "roles": "Role distribution",
+    "rolesSub": "All users (excluding admins)"
+  },
+  "recentCompanies": {
+    "title": "Recently registered companies",
+    "new": "+ New company",
+    "announcements_one": "{{count}} job post",
+    "announcements_other": "{{count}} job posts",
+    "passages_one": "{{count}} passage",
+    "passages_other": "{{count}} passages"
+  }
+}

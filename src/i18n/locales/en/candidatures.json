@@ -1,0 +1,18 @@
+{
+  "title": "Applications",
+  "subtitle_one": "{{count}} application",
+  "subtitle_other": "{{count}} applications",
+  "noResults": "No applications found.",
+  "filter": {
+    "status": "Filter by status",
+    "all": "All statuses"
+  },
+  "table": {
+    "candidate": "Candidate",
+    "announcement": "Announcement",
+    "company": "Company",
+    "station": "Station",
+    "status": "Status",
+    "date": "Date"
+  }
+}

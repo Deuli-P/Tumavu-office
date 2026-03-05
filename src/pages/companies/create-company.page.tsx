@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import type { CreateCompanyWithOwnerPayload } from '@/types/company.types'
 import { useUtils } from '@/store/utils.store'
+import { useTranslation } from 'react-i18next'
 
 const backendUrl = import.meta.env.VITE_API_BASE_URL
 
@@ -32,7 +33,11 @@ type FormValues = z.infer<typeof schema>
 
 export function AdminCreateCompanyPage() {
   const navigate = useNavigate()
-  const { stations, countries } = useUtils()
+  const { stations, countries } = useUtils();
+
+  const { t } = useTranslation('companies')
+  const { t: tc } = useTranslation('common')
+  const { i18n } = useTranslation()
 
   const {
     register,
@@ -108,22 +113,22 @@ export function AdminCreateCompanyPage() {
         className="mb-6 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
-        Retour
+        {tc('actions.back')}
       </button>
 
-      <h1 className="text-2xl font-bold">Créer une company</h1>
-      <p className="mt-1 text-sm text-muted-foreground">Enregistrez une nouvelle entreprise sur la plateforme.</p>
+      <h1 className="text-2xl font-bold">{t('create.title')}</h1>
+      <p className="mt-1 text-sm text-muted-foreground">{t('create.subtitle')}</p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
 
         {/* Nom */}
         <div className="space-y-1.5">
           <label className="text-sm font-medium">
-            Nom de la company <span className="text-destructive">*</span>
+            {t('create.field.name')} <span className="text-destructive">*</span>
           </label>
           <input
             {...register('name')}
-            placeholder="ex. Acme Corp"
+            placeholder={t('create.placeholder.name')}
             className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
           />
           {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
@@ -132,13 +137,13 @@ export function AdminCreateCompanyPage() {
         {/* Station */}
         <div className="space-y-1.5">
           <label className="text-sm font-medium">
-            Station <span className="text-destructive">*</span>
+            {t('create.field.station')} <span className="text-destructive">*</span>
           </label>
           <select
             {...register('stationId')}
             className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2"
           >
-            <option value="">— Sélectionner une station —</option>
+            <option value="">— {t('create.placeholder.station')} —</option>
             {stations.map((s) => (
               <option key={s.id} value={s.id}>
                 {s.name} ({s.country.name})
@@ -150,18 +155,18 @@ export function AdminCreateCompanyPage() {
 
         <div className="flex gap-4">
           <div className="flex-1 space-y-1.5">
-            <label className="text-sm font-medium">Type</label>
+            <label className="text-sm font-medium">{t('create.field.type')}</label>
             <input
               {...register('type')}
-              placeholder="ex. Agriculture"
+              placeholder={t('create.placeholder.type')}
               className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
             />
           </div>
           <div className="flex-1 space-y-1.5">
-            <label className="text-sm font-medium">Téléphone</label>
+            <label className="text-sm font-medium">{t('create.field.phone')}</label>
             <input
               {...register('phone')}
-              placeholder="ex. +33 6 00 00 00 00"
+              placeholder={t('create.placeholder.phone')}
               className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
             />
           </div>
@@ -170,37 +175,37 @@ export function AdminCreateCompanyPage() {
         {/* Description */}
         <div className="space-y-1.5">
           <label className="text-sm font-medium">
-            Description <span className="text-xs text-muted-foreground">(optionnel)</span>
+            {t('create.field.description')} <span className="text-xs text-muted-foreground">({tc('actions.optionnal')})</span>
           </label>
           <textarea
             {...register('description')}
             rows={3}
-            placeholder="Décrivez brièvement l'activité de cette company..."
+            placeholder={t('create.placeholder.description')}
             className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground resize-none"
           />
         </div>
 
         {/* Adresse */}
         <div className="space-y-3">
-          <h2 className="text-sm font-semibold">Adresse</h2>
+          <h2 className="text-sm font-semibold">{t('create.section.address')}</h2>
 
           <div className="flex gap-4">
             <div className="flex-1 space-y-1.5">
               <label className="text-sm font-medium">
-                Rue <span className="text-destructive">*</span>
+                {t('create.field.street')} <span className="text-destructive">*</span>
               </label>
               <input
                 {...register('address.street')}
-                placeholder="ex. 12 Rue de Rivoli"
+                placeholder={t('create.placeholder.street')}
                 className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
               />
               {errors.address?.street && <p className="text-xs text-destructive">{errors.address.street.message}</p>}
             </div>
             <div className="w-24 space-y-1.5">
-              <label className="text-sm font-medium">N°</label>
+              <label className="text-sm font-medium">{t('create.field.number')}</label>
               <input
                 {...register('address.number')}
-                placeholder="12"
+                placeholder={t('create.placeholder.number')}
                 className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
               />
             </div>
@@ -209,25 +214,25 @@ export function AdminCreateCompanyPage() {
           <div className="flex gap-4">
             <div className="flex-1 space-y-1.5">
               <label className="text-sm font-medium">
-                Ville <span className="text-destructive">*</span>
+                {t('create.field.locality')} <span className="text-destructive">*</span>
               </label>
               <input
                 {...register('address.locality')}
-                placeholder="ex. Paris"
+                placeholder={t('create.placeholder.locality')}
                 className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
               />
               {errors.address?.locality && <p className="text-xs text-destructive">{errors.address.locality.message}</p>}
             </div>
             <div className="flex-1 space-y-1.5">
               <label className="text-sm font-medium">
-                Pays <span className="text-destructive">*</span>
+                {t('create.field.country')} <span className="text-destructive">*</span>
               </label>
               <select
                 {...register('address.countryId')}
                 value={selectedCountryId ?? ''}
                 className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2"
               >
-                <option value="">— Sélectionner un pays —</option>
+                <option value="">{t('create.placeholder.country')}</option>
                 {countries.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name} ({c.code})
@@ -241,30 +246,30 @@ export function AdminCreateCompanyPage() {
 
         {/* Propriétaire */}
         <div className="space-y-3">
-          <h2 className="text-sm font-semibold">Propriétaire</h2>
+          <h2 className="text-sm font-semibold">{t('create.section.owner.title')}</h2>
           <p className="text-xs text-muted-foreground">
-            Un compte sera créé avec le mot de passe par défaut <code className="font-mono">azertyuiop</code>.
+            {t('create.section.owner.description', { defaultPassword: 'azertyuiop' })}
           </p>
 
           <div className="flex gap-4">
             <div className="flex-1 space-y-1.5">
               <label className="text-sm font-medium">
-                Prénom <span className="text-destructive">*</span>
+                {t('create.field.firstName')} <span className="text-destructive">*</span>
               </label>
               <input
                 {...register('owner.firstName')}
-                placeholder="ex. Jean"
+                placeholder={t('create.placeholder.firstName')}
                 className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
               />
               {errors.owner?.firstName && <p className="text-xs text-destructive">{errors.owner.firstName.message}</p>}
             </div>
             <div className="flex-1 space-y-1.5">
               <label className="text-sm font-medium">
-                Nom <span className="text-destructive">*</span>
+                {t('create.field.lastName')} <span className="text-destructive">*</span>
               </label>
               <input
                 {...register('owner.lastName')}
-                placeholder="ex. Dupont"
+                placeholder={t('create.placeholder.lastName')}
                 className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
               />
               {errors.owner?.lastName && <p className="text-xs text-destructive">{errors.owner.lastName.message}</p>}
@@ -273,12 +278,12 @@ export function AdminCreateCompanyPage() {
 
           <div className="space-y-1.5">
             <label className="text-sm font-medium">
-              Email <span className="text-destructive">*</span>
+              {t('create.field.email')} <span className="text-destructive">*</span>
             </label>
             <input
               {...register('owner.email')}
               type="email"
-              placeholder="ex. jean.dupont@entreprise.fr"
+              placeholder={t('create.placeholder.email')}
               className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
             />
             {errors.owner?.email && <p className="text-xs text-destructive">{errors.owner.email.message}</p>}
@@ -296,14 +301,14 @@ export function AdminCreateCompanyPage() {
             onClick={() => navigate(-1)}
             className="rounded-lg border px-5 py-2 text-sm font-medium hover:bg-muted transition-colors"
           >
-            Annuler
+            {tc('actions.cancel')}
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
             className="flex-1 rounded-lg bg-destructive px-5 py-2 text-sm font-medium text-white hover:bg-destructive/90 transition-colors disabled:opacity-50"
           >
-            {isSubmitting ? 'Création...' : 'Créer la company'}
+            {isSubmitting ? tc('state.loading') : tc('actions.create')}
           </button>
         </div>
       </form>

@@ -1,0 +1,19 @@
+{
+  "title": "Tags",
+  "subtitle": "Manage tags used to categorize job postings.",
+  "list": {
+    "title": "All tags",
+    "empty": "No tags created."
+  },
+  "create": {
+    "placeholder": "e.g. Agriculture",
+    "button": "Create"
+  },
+  "jobs_one": "{{count}} posting",
+  "jobs_other": "{{count}} postings",
+  "deleteConfirm": "Delete this tag?",
+  "error": {
+    "duplicate": "This tag already exists.",
+    "generic": "Error creating tag."
+  }
+}

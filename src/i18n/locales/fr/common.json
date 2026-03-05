@@ -1,0 +1,64 @@
+{
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "companies": "Entreprises",
+    "stations": "Stations",
+    "users": "Utilisateurs",
+    "permissions": "Permissions",
+    "annonces": "Annonces",
+    "tags": "Tags",
+    "candidatures": "Candidatures"
+  },
+  "actions": {
+    "logout": "Se déconnecter",
+    "back": "Retour",
+    "create": "Créer",
+    "add": "Ajouter",
+    "remove": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "new": "Nouveau",
+    "optionnal": "Facultatif"
+
+  },
+  "state": {
+    "loading": "Chargement...",
+    "noData": "Aucune donnée",
+    "error": "Une erreur est survenue",
+    "notFound": "Introuvable"
+  },
+  "status": {
+    "ACTIVE": "Active",
+    "CLOSED": "Fermée",
+    "CANCELLED": "Annulée"
+  },
+  "appStatus": {
+    "CONFIRMED": "Confirmé",
+    "REFUSED": "Refusé",
+    "INTERVIEW": "Entretien",
+    "SIGNATURE": "Signature",
+    "CANCELLED": "Annulée"
+  },
+  "role": {
+    "all": "Tous",
+    "owner": "Propriétaire (entreprise)",
+    "user": "Utilisateur simple",
+    "MANAGER": "Propriétaire",
+    "USER": "Utilisateur"
+  },
+  "superAdmin": "Super Admin",
+  "filter": {
+    "byCountry": "Filtrer par pays",
+    "byStation": "Filtrer par station",
+    "byTag": "Filtrer par tag",
+    "lastLogin": "Dernière connexion"
+  },
+  "table": {
+    "date": "Date",
+    "actions": "Actions"
+  },
+  "lang": {
+    "fr": "Français",
+    "en": "English"
+  }
+}

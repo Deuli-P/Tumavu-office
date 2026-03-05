@@ -1,50 +1,42 @@
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import { Plus, MapPin, Globe } from 'lucide-react'
 import { useUtils } from '@/store/utils.store'
 
 export function StationsPage() {
   const navigate = useNavigate()
+  const { t } = useTranslation('stations')
   const { stations } = useUtils()
-  const loading = false
-  const error = null
 
   return (
     <div className="mx-auto max-w-5xl px-8 py-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Stations</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Gérez les stations de la plateforme et leurs offices référents.
-          </p>
+          <h1 className="text-2xl font-bold">{t('title')}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">{t('subtitle')}</p>
         </div>
         <button
           onClick={() => navigate('/app/stations/new')}
           className="flex items-center gap-2 rounded-lg bg-destructive px-4 py-2 text-sm font-medium text-white hover:bg-destructive/90 transition-colors"
         >
           <Plus className="h-4 w-4" />
-          Nouvelle station
+          {t('new')}
         </button>
       </div>
 
       <div className="mt-8">
-        {loading && (
-          <p className="text-sm text-muted-foreground">Chargement...</p>
-        )}
-        {error && (
-          <p className="text-sm text-destructive">{error}</p>
-        )}
-        {!loading && !error && stations.length === 0 && (
+        {stations.length === 0 && (
           <div className="rounded-lg border border-dashed p-12 text-center">
-            <p className="text-sm text-muted-foreground">Aucune station enregistrée.</p>
+            <p className="text-sm text-muted-foreground">{t('noStations')}</p>
             <button
               onClick={() => navigate('/app/stations/new')}
               className="mt-4 text-sm font-medium text-destructive hover:underline"
             >
-              Créer la première station
+              {t('createFirst')}
             </button>
           </div>
         )}
-        {!loading && stations.length > 0 && (
+        {stations.length > 0 && (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {stations.map((station) => (
               <div

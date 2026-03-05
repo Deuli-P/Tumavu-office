@@ -1,0 +1,54 @@
+{
+  "title": "Permissions",
+  "subtitle": "Gérez les permissions et leur assignation aux rôles.",
+  "list": {
+    "title": "Toutes les permissions",
+    "empty": "Aucune permission créée."
+  },
+  "create": {
+    "placeholder": "ex : annonce:read",
+    "button": "Créer"
+  },
+  "roles": {
+    "title": "Rôles",
+    "noPermissions": "Aucune permission assignée.",
+    "addPlaceholder": "Ajouter une permission…",
+    "noUnassigned": "Toutes les permissions sont déjà assignées."
+  },
+  "permissions": {
+    "apply_jobs": "Postuler à des emplois",
+    "read_announcements": "Lire les annonces",
+    "manage_users": "Gérer les utilisateurs",
+    "view_reports": "Voir les rapports",
+    "edit_settings": "Modifier les paramètres",
+    "create_jobs": "Créer des offres d'emploi",
+    "delete_jobs": "Supprimer des offres d'emploi",
+    "manage_permissions": "Gérer les permissions",
+    "view_financials": "Voir les données financières",
+    "export_data": "Exporter les données",
+    "import_data": "Importer des données",
+    "manage_roles": "Gérer les rôles",
+    "view_audit_logs": "Voir les journaux d'audit",
+    "access_api": "Accéder à l'API",
+    "manage_announcements": "Gérer les annonces",
+    "view_applications": "Voir les candidatures",
+    "write_roles": "Créer et modifier des rôles",
+    "write_permissions": "Créer et modifier des permissions",
+    "write_users": "Créer et modifier des utilisateurs",
+    "delete_companies": "Supprimer des entreprises",
+    "delete_users": "Supprimer des utilisateurs",
+    "delete_roles": "Supprimer des rôles",
+    "delete_permissions": "Supprimer des permissions",
+    "read_companies": "Lire les entreprises",
+    "read_users": "Lire les utilisateurs",
+    "read_roles": "Lire les rôles",
+    "upload_cv": "Télécharger un CV",
+    "upload_cover_letter": "Télécharger une lettre de motivation",
+    "manage_internships": "Gérer les stages",
+    "manage_events": "Gérer les événements",
+    "view_analytics": "Voir les analyses",
+    "upload_photo": "Télécharger une photo",
+    "update_jobs": "Mettre à jour les offres d'emploi",
+    "write_companies": "Créer et modifier des entreprises"
+  }
+}

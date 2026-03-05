@@ -1,0 +1,83 @@
+{
+  "title": "Entreprise",
+  "subtitle_one": "{{count}} entreprise",
+  "subtitle_other": "{{count}} entreprises",
+  "new": "Nouvelle entreprise",
+  "noCompanies": "Aucune entreprise trouvée.",
+  "table": {
+    "name": "Nom",
+    "station": "Station",
+    "address": "Adresse",
+    "owner": "Propriétaire",
+    "createdAt": "Inscrite le",
+    "announcements": "Annonces",
+    "jobs": "Jobs",
+    "addedAt": "Ajouté le"
+  },
+  "detail": {
+    "back": "Retour aux entreprises",
+    "owner": "Propriétaire",
+    "station": "Station",
+    "address": "Adresse",
+    "phone": "Téléphone",
+    "passagesWeek": "Passages cette semaine",
+    "passagesMonth": "Passages ce mois",
+    "jobs": "Offres d'emploi",
+    "announcements": "Annonces",
+    "noJobs": "Aucune offre d'emploi.",
+    "noAnnouncements": "Aucune annonce.",
+    "table": {
+      "title": "Titre",
+      "contract": "Contrat",
+      "status": "Statut",
+      "tags": "Tags",
+      "applications": "Candidatures",
+      "postedAt": "Publié le",
+      "job": "Offre"
+    }
+  },
+  "create": {
+    "title": "Créer une entreprise",
+    "subtitle": "Remplissez les informations de la nouvelle entreprise et de son propriétaire.",
+    "section": {
+      "company": "Informations de l'entreprise",
+      "address": "Adresse",
+      "owner": {
+        "title": "Propriétaire",
+        "description": "Le propriétaire de l'entreprise aura accès à son tableau de bord pour gérer"
+      }
+    },
+    "field": {
+      "name": "Nom de l'entreprise",
+      "description": "Description",
+      "phone": "Téléphone",
+      "type": "Type",
+      "station": "Station",
+      "street": "Rue",
+      "number": "Numéro",
+      "locality": "Ville",
+      "country": "Pays",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email"
+    },
+    "submit": "Créer l'entreprise",
+    "submitting": "Création en cours…",
+    "success": "Entreprise créée avec succès.",
+    "error": "Erreur lors de la création.",
+    "placeholder": {
+      "name": "Ex: Café du coin",
+      "description": "Ex: Un petit café chaleureux au cœur de la ville.",
+      "phone": "Ex: +33 1 23 45 67 89",
+      "type": "Ex: Restauration, Commerce, Service, etc.",
+      "station": "Sélectionnez une station",
+      "street": "Ex: Rue de la Paix",
+      "number": "Ex: 123",
+      "locality": "Ex: Paris",
+      "country": "Sélectionnez un pays",
+      "firstName": "Ex: Jean",
+      "lastName": "Ex: Dupont",
+      "email": "Ex: jean.dupont@example.com"
+    }
+  }
+}

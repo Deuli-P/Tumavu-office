@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -59,6 +60,8 @@ function Skeleton({ className }: { className?: string }) {
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export function AdminDashboardPage() {
+  const { t } = useTranslation('dashboard')
+  const { t: tc } = useTranslation('common')
   const [data, setData] = useState<DashboardData | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -114,32 +117,32 @@ export function AdminDashboardPage() {
   const statsConfig = data
     ? [
         {
-          label: 'Companies',
+          label: t('stats.companies'),
           value: data.stats.companiesTotal,
           icon: Building2,
           color: 'bg-red-50 text-red-600',
-          sub: `+${data.stats.companiesThisMonth} ce mois`,
+          sub: t('stats.companiesThisMonth', { count: data.stats.companiesThisMonth }),
         },
         {
-          label: 'Annonces totales',
+          label: t('stats.announcements'),
           value: data.stats.announcementsTotal,
           icon: Briefcase,
           color: 'bg-blue-50 text-blue-600',
-          sub: 'sur toute la plateforme',
+          sub: t('stats.announcementsSub'),
         },
         {
-          label: 'Utilisateurs actifs',
+          label: t('stats.activeUsers'),
           value: data.stats.activeUsersThisMonth,
           icon: Users,
           color: 'bg-purple-50 text-purple-600',
-          sub: 'connectés ce mois',
+          sub: t('stats.activeUsersSub'),
         },
         {
-          label: 'Nouveaux inscrits',
+          label: t('stats.newUsers'),
           value: data.stats.newUsersThisMonth,
           icon: UserPlus,
           color: 'bg-green-50 text-green-600',
-          sub: 'ce mois-ci',
+          sub: t('stats.newUsersSub'),
         },
       ]
     : []
@@ -149,11 +152,11 @@ export function AdminDashboardPage() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Vue plateforme</h1>
-          <p className="text-sm text-muted-foreground mt-1">Statistiques globales de Tumavu</p>
+          <h1 className="text-2xl font-bold">{t('title')}</h1>
+          <p className="text-sm text-muted-foreground mt-1">{t('subtitle')}</p>
         </div>
         <span className="rounded-full bg-destructive/10 px-3 py-1 text-xs font-semibold text-destructive">
-          Super Admin
+          {tc('superAdmin')}
         </span>
       </div>
 
@@ -184,9 +187,9 @@ export function AdminDashboardPage() {
         <div className="col-span-2 rounded-xl border bg-white p-6 shadow-sm">
           <div className="mb-1 flex items-center gap-2">
             <QrCode className="h-4 w-4 text-muted-foreground" />
-            <h2 className="font-semibold">Passages par mois</h2>
+            <h2 className="font-semibold">{t('charts.passages')}</h2>
           </div>
-          <p className="mb-4 text-xs text-muted-foreground">12 derniers mois</p>
+          <p className="mb-4 text-xs text-muted-foreground">{t('charts.passagesSub')}</p>
           <div className="h-64">
             {loading
               ? <Skeleton className="h-full w-full" />
@@ -196,8 +199,8 @@ export function AdminDashboardPage() {
         </div>
 
         <div className="rounded-xl border bg-white p-6 shadow-sm">
-          <h2 className="mb-1 font-semibold">Répartition des rôles</h2>
-          <p className="mb-4 text-xs text-muted-foreground">Tous utilisateurs (hors admins)</p>
+          <h2 className="mb-1 font-semibold">{t('charts.roles')}</h2>
+          <p className="mb-4 text-xs text-muted-foreground">{t('charts.rolesSub')}</p>
           <div className="h-64">
             {loading
               ? <Skeleton className="h-full w-full rounded-full" />
@@ -210,12 +213,12 @@ export function AdminDashboardPage() {
       {/* Recent companies */}
       <div className="rounded-xl border bg-white shadow-sm">
         <div className="flex items-center justify-between px-6 py-4 border-b">
-          <h2 className="font-semibold">Dernières companies inscrites</h2>
+          <h2 className="font-semibold">{t('recentCompanies.title')}</h2>
           <Link
             to="/app/companies/new"
             className="rounded-lg bg-destructive px-3 py-1.5 text-xs font-medium text-white hover:bg-destructive/90 transition-colors"
           >
-            + Nouvelle company
+            {t('recentCompanies.new')}
           </Link>
         </div>
         <div className="divide-y">
@@ -252,11 +255,11 @@ export function AdminDashboardPage() {
                   <div className="flex items-center gap-6 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Briefcase className="h-3.5 w-3.5" />
-                      {company._count.announcements} annonce{company._count.announcements > 1 ? 's' : ''}
+                      {t('recentCompanies.announcements', { count: company._count.announcements })}
                     </span>
                     <span className="flex items-center gap-1">
                       <TrendingUp className="h-3.5 w-3.5" />
-                      {company._count.passages} passage{company._count.passages > 1 ? 's' : ''}
+                      {t('recentCompanies.passages', { count: company._count.passages })}
                     </span>
                     <span>{new Date(company.createdAt).toLocaleDateString('fr-FR')}</span>
                   </div>

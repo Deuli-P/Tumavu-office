@@ -1,19 +1,14 @@
 import { useEffect, useState, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MultiSelect } from '@/components/ui/multi-select'
 import { DateRangePicker, type DateRange } from '@/components/ui/date-range-picker'
 import type { AdminUserItem } from '@/types/admin.types'
 
 const backendUrl = import.meta.env.VITE_API_BASE_URL
 
-const ROLE_OPTIONS = [
-  { value: 'all', label: 'Tous' },
-  { value: 'owner', label: 'Owner (company)' },
-  { value: 'user', label: 'Utilisateur simple' },
-]
-
-const roleConfig: Record<string, { label: string; color: string }> = {
-  MANAGER: { label: 'Owner', color: 'bg-blue-100 text-blue-700' },
-  USER: { label: 'Utilisateur', color: 'bg-gray-100 text-gray-600' },
+const roleConfig: Record<string, { color: string }> = {
+  MANAGER: { color: 'bg-blue-100 text-blue-700' },
+  USER: { color: 'bg-gray-100 text-gray-600' },
 }
 
 function formatDate(date?: string | null) {
@@ -22,6 +17,8 @@ function formatDate(date?: string | null) {
 }
 
 export function AdminUsersPage() {
+  const { t } = useTranslation('users')
+  const { t: tc } = useTranslation('common')
   const [users, setUsers] = useState<AdminUserItem[]>([])
   const [loading, setLoading] = useState(true)
   const [countryOptions, setCountryOptions] = useState<{ value: string | number; label: string }[]>([])
@@ -60,12 +57,18 @@ export function AdminUsersPage() {
     fetchUsers()
   }, [fetchUsers])
 
+  const roleOptions = [
+    { value: 'all', label: tc('role.all') },
+    { value: 'owner', label: tc('role.owner') },
+    { value: 'user', label: tc('role.user') },
+  ]
+
   return (
     <div className="p-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Utilisateurs</h1>
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
         <p className="text-sm text-muted-foreground mt-1">
-          {loading ? '...' : `${users.length} utilisateur${users.length > 1 ? 's' : ''}`}
+          {loading ? tc('state.loading') : t('subtitle', { count: users.length })}
         </p>
       </div>
 
@@ -75,11 +78,11 @@ export function AdminUsersPage() {
           options={countryOptions}
           selected={selectedCountries}
           onChange={setSelectedCountries}
-          placeholder="Filtrer par pays"
+          placeholder={tc('filter.byCountry')}
           className="w-56"
         />
         <div className="flex rounded-lg border bg-white overflow-hidden text-sm">
-          {ROLE_OPTIONS.map((opt) => (
+          {roleOptions.map((opt) => (
             <button
               key={opt.value}
               type="button"
@@ -97,7 +100,7 @@ export function AdminUsersPage() {
         <DateRangePicker
           value={lastLogin}
           onChange={setLastLogin}
-          label="Dernière connexion"
+          label={tc('filter.lastLogin')}
         />
       </div>
 
@@ -105,23 +108,23 @@ export function AdminUsersPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b bg-muted/40">
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Utilisateur</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Rôle</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pays</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Company</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Inscrit le</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Dernière connexion</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.user')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.role')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.country')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.company')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.createdAt')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.lastLogin')}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
             {loading && (
-              <tr><td colSpan={6} className="px-6 py-8 text-center text-sm text-muted-foreground">Chargement...</td></tr>
+              <tr><td colSpan={6} className="px-6 py-8 text-center text-sm text-muted-foreground">{tc('state.loading')}</td></tr>
             )}
             {!loading && users.length === 0 && (
-              <tr><td colSpan={6} className="px-6 py-8 text-center text-sm text-muted-foreground">Aucun utilisateur trouvé.</td></tr>
+              <tr><td colSpan={6} className="px-6 py-8 text-center text-sm text-muted-foreground">{t('noUsers')}</td></tr>
             )}
             {users.map((user) => {
-              const roleStyle = roleConfig[user.role.type] ?? { label: user.role.value, color: 'bg-gray-100 text-gray-600' }
+              const roleStyle = roleConfig[user.role.type] ?? { color: 'bg-gray-100 text-gray-600' }
               return (
                 <tr key={user.id} className="hover:bg-muted/30 transition-colors">
                   <td className="px-6 py-4">
@@ -137,7 +140,7 @@ export function AdminUsersPage() {
                   </td>
                   <td className="px-6 py-4">
                     <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${roleStyle.color}`}>
-                      {roleStyle.label}
+                      {tc(`role.${user.role.type}`)}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-sm text-muted-foreground">{user.country?.name ?? '—'}</td>

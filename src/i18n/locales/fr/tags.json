@@ -1,0 +1,19 @@
+{
+  "title": "Tags",
+  "subtitle": "Gérez les tags utilisés pour catégoriser les offres d'emploi.",
+  "list": {
+    "title": "Tous les tags",
+    "empty": "Aucun tag créé."
+  },
+  "create": {
+    "placeholder": "ex : Agriculture",
+    "button": "Créer"
+  },
+  "jobs_one": "{{count}} offre",
+  "jobs_other": "{{count}} offres",
+  "deleteConfirm": "Supprimer ce tag ?",
+  "error": {
+    "duplicate": "Ce tag existe déjà.",
+    "generic": "Erreur lors de la création."
+  }
+}

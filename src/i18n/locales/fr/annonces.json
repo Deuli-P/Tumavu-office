@@ -1,0 +1,22 @@
+{
+  "title": "Annonces",
+  "subtitle_one": "{{count}} annonce",
+  "subtitle_other": "{{count}} annonces",
+  "noAnnouncements": "Aucune annonce.",
+  "table": {
+    "title": "Titre",
+    "job": "Job",
+    "tags": "Tags",
+    "company": "Company",
+    "station": "Station",
+    "status": "Statut",
+    "publishedAt": "Publiée le",
+    "applications": "Candidatures"
+  },
+  "drawer": {
+    "publishedOn": "Publiée le {{date}}",
+    "applicants": "Postulants ({{count}})",
+    "noApplicants": "Aucun postulant pour le moment.",
+    "appliedOn": "Postulé le {{date}}"
+  }
+}

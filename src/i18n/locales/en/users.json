@@ -1,0 +1,14 @@
+{
+  "title": "Users",
+  "subtitle_one": "{{count}} user",
+  "subtitle_other": "{{count}} users",
+  "noUsers": "No users found.",
+  "table": {
+    "user": "User",
+    "role": "Role",
+    "country": "Country",
+    "company": "Company",
+    "createdAt": "Registered on",
+    "lastLogin": "Last login"
+  }
+}

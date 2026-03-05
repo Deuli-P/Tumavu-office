@@ -1,4 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FileText, Users, Briefcase, Building2, MapPin, Phone, Calendar, Tag } from 'lucide-react'
 import { Sheet } from '@/components/ui/sheet'
 import { MultiSelect } from '@/components/ui/multi-select'
@@ -9,18 +10,18 @@ const backendUrl = import.meta.env.VITE_API_BASE_URL
 
 // ── Statuts ────────────────────────────────────────────────────────────────
 
-const statusConfig: Record<string, { label: string; color: string }> = {
-  ACTIVE:    { label: 'Active',    color: 'bg-green-100 text-green-700' },
-  CLOSED:    { label: 'Fermée',   color: 'bg-gray-100 text-gray-600' },
-  CANCELLED: { label: 'Annulée',  color: 'bg-red-100 text-red-600' },
+const statusColor: Record<string, string> = {
+  ACTIVE:    'bg-green-100 text-green-700',
+  CLOSED:    'bg-gray-100 text-gray-600',
+  CANCELLED: 'bg-red-100 text-red-600',
 }
 
-const appStatusConfig: Record<ApplicationStatus, { label: string; color: string }> = {
-  CONFIRMED:  { label: 'Confirmé',   color: 'bg-green-100 text-green-700' },
-  REFUSED:    { label: 'Refusé',     color: 'bg-red-100 text-red-600' },
-  INTERVIEW:  { label: 'Entretien',  color: 'bg-blue-100 text-blue-700' },
-  SIGNATURE:  { label: 'Signature',  color: 'bg-purple-100 text-purple-700' },
-  CANCELLED:  { label: 'Annulée',   color: 'bg-gray-100 text-gray-500' },
+const appStatusColor: Record<ApplicationStatus, string> = {
+  CONFIRMED:  'bg-green-100 text-green-700',
+  REFUSED:    'bg-red-100 text-red-600',
+  INTERVIEW:  'bg-blue-100 text-blue-700',
+  SIGNATURE:  'bg-purple-100 text-purple-700',
+  CANCELLED:  'bg-gray-100 text-gray-500',
 }
 
 function formatDate(d: string) {
@@ -30,8 +31,10 @@ function formatDate(d: string) {
 // ── Composant card postulant ───────────────────────────────────────────────
 
 function ApplicantCard({ app }: { app: AnnouncementDetail['applications'][number] }) {
+  const { t: tc } = useTranslation('common')
+  const { t } = useTranslation('annonces')
   const initials = `${app.user.firstName[0]}${app.user.lastName[0]}`.toUpperCase()
-  const statusStyle = app.status ? appStatusConfig[app.status] : null
+  const color = app.status ? appStatusColor[app.status] : null
 
   return (
     <div className="rounded-xl border bg-white p-4 space-y-2 shadow-sm">
@@ -47,9 +50,9 @@ function ApplicantCard({ app }: { app: AnnouncementDetail['applications'][number
             <p className="text-xs text-muted-foreground">{app.user.auth.email}</p>
           </div>
         </div>
-        {statusStyle && (
-          <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusStyle.color}`}>
-            {statusStyle.label}
+        {color && app.status && (
+          <span className={`shrink-0 rounded-full px-2.5 py-0.5 text-xs font-medium ${color}`}>
+            {tc(`appStatus.${app.status}`)}
           </span>
         )}
       </div>
@@ -66,7 +69,7 @@ function ApplicantCard({ app }: { app: AnnouncementDetail['applications'][number
           </span>
         )}
         <span className="flex items-center gap-1">
-          <Calendar className="h-3 w-3" />Postulé le {formatDate(app.createdAt)}
+          <Calendar className="h-3 w-3" />{t('drawer.appliedOn', { date: formatDate(app.createdAt) })}
         </span>
       </div>
     </div>
@@ -104,7 +107,9 @@ function AnnouncementDrawer({ id, onClose }: { id: number; onClose: () => void }
     )
   }
 
-  const statusStyle = detail.status ? statusConfig[detail.status] : null
+  const { t } = useTranslation('annonces')
+  const { t: tc } = useTranslation('common')
+  const statusColor2 = detail.status ? statusColor[detail.status] : null
 
   return (
     <Sheet open onClose={onClose} title={detail.title}>
@@ -112,13 +117,13 @@ function AnnouncementDrawer({ id, onClose }: { id: number; onClose: () => void }
 
         {/* Statut + dates */}
         <div className="flex flex-wrap items-center gap-3">
-          {statusStyle && (
-            <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusStyle.color}`}>
-              {statusStyle.label}
+          {statusColor2 && detail.status && (
+            <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColor2}`}>
+              {tc(`status.${detail.status}`)}
             </span>
           )}
           <span className="text-xs text-muted-foreground">
-            Publiée le {formatDate(detail.createdAt)}
+            {t('drawer.publishedOn', { date: formatDate(detail.createdAt) })}
           </span>
         </div>
 
@@ -162,12 +167,12 @@ function AnnouncementDrawer({ id, onClose }: { id: number; onClose: () => void }
           <div className="flex items-center gap-2">
             <Users className="h-4 w-4 text-muted-foreground" />
             <h3 className="text-sm font-semibold">
-              Postulants ({detail.applications.length})
+              {t('drawer.applicants', { count: detail.applications.length })}
             </h3>
           </div>
 
           {detail.applications.length === 0 ? (
-            <p className="text-sm text-muted-foreground italic">Aucun postulant pour le moment.</p>
+            <p className="text-sm text-muted-foreground italic">{t('drawer.noApplicants')}</p>
           ) : (
             <div className="space-y-2">
               {detail.applications.map((app) => (
@@ -184,6 +189,8 @@ function AnnouncementDrawer({ id, onClose }: { id: number; onClose: () => void }
 // ── Page principale ────────────────────────────────────────────────────────
 
 export function AnnoncesPage() {
+  const { t } = useTranslation('annonces')
+  const { t: tc } = useTranslation('common')
   const [announcements, setAnnouncements] = useState<AnnouncementListItem[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedId, setSelectedId] = useState<number | null>(null)
@@ -220,9 +227,9 @@ export function AnnoncesPage() {
   return (
     <div className="p-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Annonces</h1>
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
         <p className="text-sm text-muted-foreground mt-1">
-          {loading ? '...' : `${announcements.length} annonce${announcements.length > 1 ? 's' : ''}`}
+          {loading ? tc('state.loading') : t('subtitle', { count: announcements.length })}
         </p>
       </div>
 
@@ -232,14 +239,14 @@ export function AnnoncesPage() {
           options={stationOptions}
           selected={selectedStations}
           onChange={setSelectedStations}
-          placeholder="Filtrer par station"
+          placeholder={tc('filter.byStation')}
           className="w-52"
         />
         <MultiSelect
           options={tagOptions}
           selected={selectedTags}
           onChange={setSelectedTags}
-          placeholder="Filtrer par tag"
+          placeholder={tc('filter.byTag')}
           className="w-52"
         />
       </div>
@@ -248,29 +255,29 @@ export function AnnoncesPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b bg-muted/40">
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Titre</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Job</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tags</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Company</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Station</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Statut</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Publiée le</th>
-              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">Candidatures</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.title')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.job')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.tags')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.company')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.station')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.status')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.publishedAt')}</th>
+              <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.applications')}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
             {loading && (
               <tr>
-                <td colSpan={8} className="px-6 py-8 text-center text-sm text-muted-foreground">Chargement...</td>
+                <td colSpan={8} className="px-6 py-8 text-center text-sm text-muted-foreground">{tc('state.loading')}</td>
               </tr>
             )}
             {!loading && announcements.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-6 py-8 text-center text-sm text-muted-foreground">Aucune annonce.</td>
+                <td colSpan={8} className="px-6 py-8 text-center text-sm text-muted-foreground">{t('noAnnouncements')}</td>
               </tr>
             )}
             {announcements.map((a) => {
-              const statusStyle = a.status ? statusConfig[a.status] : null
+              const color = a.status ? statusColor[a.status] : null
               const tags = a.job?.tags ?? []
               return (
                 <tr
@@ -320,9 +327,9 @@ export function AnnoncesPage() {
                     ) : '—'}
                   </td>
                   <td className="px-6 py-4">
-                    {statusStyle ? (
-                      <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusStyle.color}`}>
-                        {statusStyle.label}
+                    {color && a.status ? (
+                      <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${color}`}>
+                        {tc(`status.${a.status}`)}
                       </span>
                     ) : '—'}
                   </td>

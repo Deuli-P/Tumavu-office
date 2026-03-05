@@ -1,0 +1,54 @@
+{
+  "title": "Permissions",
+  "subtitle": "Manage permissions and their assignment to roles.",
+  "list": {
+    "title": "All permissions",
+    "empty": "No permissions created."
+  },
+  "create": {
+    "placeholder": "e.g. announcement:read",
+    "button": "Create"
+  },
+  "roles": {
+    "title": "Roles",
+    "noPermissions": "No permissions assigned.",
+    "addPlaceholder": "Add a permission…",
+    "noUnassigned": "All permissions are already assigned."
+  },
+  "permissions": {
+    "apply_jobs": "Apply to jobs",
+    "read_announcements": "Read announcements",
+    "manage_users": "Manage users",
+    "view_reports": "View reports",
+    "edit_settings": "Edit settings",
+    "create_jobs": "Create job postings",
+    "delete_jobs": "Delete job postings",
+    "manage_permissions": "Manage permissions",
+    "view_financials": "View financial data",
+    "export_data": "Export data",
+    "import_data": "Import data",
+    "manage_roles": "Manage roles",
+    "view_audit_logs": "View audit logs",
+    "access_api": "Access API",
+    "manage_announcements": "Manage announcements",
+    "view_applications": "View applications",
+    "write_roles": "Create and edit roles",
+    "write_permissions": "Create and edit permissions",
+    "write_users": "Create and edit users",
+    "delete_companies": "Delete companies",
+    "delete_users": "Delete users",
+    "delete_roles": "Delete roles",
+    "delete_permissions": "Delete permissions",
+    "read_companies": "Read companies",
+    "read_users": "Read users",
+    "read_roles": "Read roles",
+    "upload_cv": "Upload CV",
+    "upload_cover_letter": "Upload cover letter",
+    "manage_internships": "Manage internships",
+    "manage_events": "Manage events",
+    "view_analytics": "View analytics",
+    "upload_photo": "Upload photo",
+    "write_companies": "Create and edit companies",
+    "update_jobs": "Update job postings"
+  }
+}
