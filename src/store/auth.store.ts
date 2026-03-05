@@ -10,7 +10,7 @@ type AuthState = {
   isInitializing: boolean
   setAuth: (payload: { token: string; user: User | null }) => void
   logout: () => void
-  signIn: (as: 'ADMIN' | 'MANAGER', email: string, password: string) => Promise<void>
+  signIn: (as: 'ADMIN', email: string, password: string) => Promise<void>
   initSession: () => Promise<void>
 }
 
@@ -45,7 +45,7 @@ export const useAuthStore = create<AuthState>()(
           }
         },
 
-        signIn: async (as: 'ADMIN' | 'MANAGER', email: string, password: string)=> {
+        signIn: async (as: 'ADMIN', email: string, password: string)=> {
             try{
               if(email === '' || password === ''){
                   throw new Error('Email et mot de passe sont requis');
