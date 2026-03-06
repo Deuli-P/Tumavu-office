@@ -121,24 +121,24 @@ const CompaniesPage = () => {
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-sm text-muted-foreground">{company.station.name}</td>
+                <td className="px-6 py-4 text-sm text-muted-foreground">{company?.station?.name}</td>
                 <td className="px-6 py-4 text-sm text-muted-foreground">
-                  {company.owner.firstName.charAt(0)}. {company.owner.lastName}
+                  {company?.owner?.firstName?.charAt(0)}. {company?.owner?.lastName}
                 </td>
                 <td className="px-6 py-4">
                   <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                     <File className="h-3.5 w-3.5" />
-                    {company._count.announcements}
+                    {company?._count?.announcements}
                   </span>
                 </td>
                 <td className="px-6 py-4">
                   <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                     <Briefcase className="h-3.5 w-3.5" />
-                    {company._count.jobs}
+                    {company?._count?.jobs}
                   </span>
                 </td>
                 <td className="px-6 py-4 text-sm text-muted-foreground">
-                  {new Date(company.createdAt).toLocaleDateString(i18n.language === 'fr' ? 'fr-FR' : 'en-GB')}
+                  {company?.createdAt ? new Date(company.createdAt).toLocaleDateString(i18n.language === 'fr' ? 'fr-FR' : 'en-GB') : ''}
                 </td>
               </tr>
             ))}

@@ -18,7 +18,7 @@ const schema = z.object({
   stationId: z.coerce.number().int().positive('Station requise'),
   address: z.object({
     street: z.string().min(2, 'Rue requise'),
-    number: z.string().optional(),
+    zipCode: z.string().optional(),
     locality: z.string().min(2, 'Ville requise'),
     countryId: z.coerce.number().int().positive('Pays requis'),
   }),
@@ -202,10 +202,10 @@ export function AdminCreateCompanyPage() {
               {errors.address?.street && <p className="text-xs text-destructive">{errors.address.street.message}</p>}
             </div>
             <div className="w-24 space-y-1.5">
-              <label className="text-sm font-medium">{t('create.field.number')}</label>
+              <label className="text-sm font-medium">{t('create.field.zipCode')}</label>
               <input
-                {...register('address.number')}
-                placeholder={t('create.placeholder.number')}
+                {...register('address.zipCode')}
+                placeholder={t('create.placeholder.zipCode')}
                 className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
               />
             </div>

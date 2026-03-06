@@ -10,8 +10,8 @@ export function LoginPage() {
   const [loading, setLoading] = useState<boolean>(false)
 
   const [ form , setForm ]= useState<{email: string, password: string}>({
-    email: 'admin@tumavu.eu',
-    password: 'azertyuiop',
+    email: 'admin@tumavu.com',
+    password: 'MotDePasseSecurise123!',
   })
 
 

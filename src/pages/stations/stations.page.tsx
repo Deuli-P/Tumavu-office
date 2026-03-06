@@ -25,7 +25,7 @@ export function StationsPage() {
       </div>
 
       <div className="mt-8">
-        {stations.length === 0 && (
+        {stations?.length === 0 && (
           <div className="rounded-lg border border-dashed p-12 text-center">
             <p className="text-sm text-muted-foreground">{t('noStations')}</p>
             <button
@@ -36,7 +36,7 @@ export function StationsPage() {
             </button>
           </div>
         )}
-        {stations.length > 0 && (
+        {stations?.length > 0 && (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {stations.map((station) => (
               <div
@@ -46,9 +46,7 @@ export function StationsPage() {
               >
                 <div className="flex items-start justify-between">
                   <h2 className="font-semibold">{station.name}</h2>
-                  <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
-                    #{station.id}
-                  </span>
+
                 </div>
 
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -58,11 +56,14 @@ export function StationsPage() {
 
                 <div className="flex items-start gap-2 text-sm text-muted-foreground">
                   <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                  <div className='flex flex-col justify-start'>
                   <span>
-                    {station.officeAddress.street}
-                    {station.officeAddress.number ? ` ${station.officeAddress.number}` : ''},&nbsp;
-                    {station.officeAddress.locality}
+                    {station.officeAddress.streetNumber ? ` ${station.officeAddress.streetNumber}` : ''} {station.officeAddress.street},&nbsp;
                   </span>
+                  <span>
+                    {station.officeAddress.zipCode} {station.officeAddress.locality}
+                  </span>
+                  </div>
                 </div>
               </div>
             ))}

@@ -6,15 +6,24 @@
   "createFirst": "Créer la première station",
   "create": {
     "title": "Créer une station",
+    "subtitle": "Remplissez les informations de la nouvelle station et de son office référent.",
     "field": {
       "name": "Nom de la station",
       "country": "Pays",
       "street": "Rue",
-      "number": "Numéro",
+      "zipCode": "Code postal",
       "locality": "Ville"
     },
+    "placeholder": {
+      "name": "Ex: Gare de Lyon",
+      "country": "Sélectionnez un pays",
+      "street": "Ex: 12 Rue des Alpes",
+      "zipCode": "Ex: 12345",
+      "locality": "Ex: Paris"
+    },
     "section": {
-      "officeAddress": "Adresse de l'office référent"
+      "officeAddress": "Adresse de l'office référent",
+      "officeAddressDescription": "L'adresse physique du bureau de gestion de cette station."
     },
     "submit": "Créer la station",
     "submitting": "Création en cours…",

@@ -96,14 +96,14 @@ export function TagsPage() {
           {!loading && tags.length === 0 && (
             <p className="px-4 py-6 text-sm text-muted-foreground text-center">{t('list.empty')}</p>
           )}
-          {tags.map((tag) => (
+          {tags?.map((tag) => (
             <div key={tag.id} className="flex items-center justify-between gap-3 px-4 py-3">
               <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
                   <TagIcon className="h-4 w-4 text-muted-foreground" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium">{tag.name}</p>
+                  <p className="text-sm font-medium">{t(`tags.${tag.name}`)}</p>
                   <p className="text-xs text-muted-foreground">
                     {t('jobs', { count: tag._count.jobs })}
                   </p>

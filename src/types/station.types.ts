@@ -10,7 +10,8 @@ export interface StationData {
   country: CountryOption
   officeAddress: {
     street: string
-    number: string | null
+    streetNumber: string | null
+    zipCode: string
     locality: string
     country: CountryOption
   }
@@ -21,7 +22,8 @@ export interface CreateStationPayload {
   countryId: number
   officeAddress: {
     street: string
-    number?: string
+    streetNumber?: string
+    zipCode: string
     locality: string
   }
 }

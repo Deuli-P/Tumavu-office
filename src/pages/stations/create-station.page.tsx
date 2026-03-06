@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import type { CreateStationPayload } from '@/types/station.types'
 import { useUtils } from '@/store/utils.store'
+import { useTranslation } from 'react-i18next'
 
 const backendUrl = import.meta.env.VITE_API_BASE_URL
 
@@ -13,7 +14,7 @@ const schema = z.object({
   countryId: z.coerce.number().int().positive('Pays requis'),
   officeAddress: z.object({
     street: z.string().min(1, 'Rue requise'),
-    number: z.string().optional(),
+    zipCode: z.string().optional(),
     locality: z.string().min(1, 'Ville requise'),
   }),
 })
@@ -23,6 +24,9 @@ type FormValues = z.infer<typeof schema>
 export function CreateStationPage() {
   const navigate = useNavigate()
   const { countries } = useUtils()
+
+  const { t } = useTranslation('stations')
+  const { t: tc } = useTranslation('common')
 
   const {
     register,
@@ -40,7 +44,7 @@ export function CreateStationPage() {
       countryId: data.countryId,
       officeAddress: {
         street: data.officeAddress.street,
-        number: data.officeAddress.number || undefined,
+        zipCode: data.officeAddress.zipCode || undefined,
         locality: data.officeAddress.locality,
       },
     }
@@ -74,12 +78,12 @@ export function CreateStationPage() {
         className="mb-6 flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
-        Retour
+        {tc('actions.back')}
       </button>
 
-      <h1 className="text-2xl font-bold">Créer une station</h1>
+      <h1 className="text-2xl font-bold">{t('create.title')}</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Enregistrez une nouvelle station et l'adresse de son office référent.
+        {t('create.subtitle')}
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
@@ -87,11 +91,11 @@ export function CreateStationPage() {
         {/* Nom */}
         <div className="space-y-1.5">
           <label className="text-sm font-medium">
-            Nom de la station <span className="text-destructive">*</span>
+            {t('create.field.name')} <span className="text-destructive">*</span>
           </label>
           <input
             {...register('name')}
-            placeholder="ex. Les 3 Vallées"
+            placeholder={t('create.placeholder.name')}
             className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
           />
           {errors.name && <p className="text-xs text-destructive">{errors.name.message}</p>}
@@ -100,13 +104,13 @@ export function CreateStationPage() {
         {/* Pays */}
         <div className="space-y-1.5">
           <label className="text-sm font-medium">
-            Pays <span className="text-destructive">*</span>
+            {t('create.field.country')} <span className="text-destructive">*</span>
           </label>
           <select
             {...register('countryId')}
             className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2"
           >
-            <option value="">— Sélectionner un pays —</option>
+            <option value="">{t('create.placeholder.country')}</option>
             {countries.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name} ({c.code})
@@ -119,20 +123,20 @@ export function CreateStationPage() {
         {/* Adresse de l'office */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-sm font-semibold">Adresse de l'office référent</h2>
+            <h2 className="text-sm font-semibold">{t('create.section.officeAddress')}</h2>
             <p className="text-xs text-muted-foreground mt-0.5">
-              L'adresse physique du bureau de gestion de cette station.
+              {t('create.section.officeAddressDescription')}
             </p>
           </div>
 
           <div className="flex gap-4">
             <div className="flex-1 space-y-1.5">
               <label className="text-sm font-medium">
-                Rue <span className="text-destructive">*</span>
+                {t('create.field.street')} <span className="text-destructive">*</span>
               </label>
               <input
                 {...register('officeAddress.street')}
-                placeholder="ex. 12 Rue des Alpes"
+                placeholder={t('create.placeholder.street')}
                 className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
               />
               {errors.officeAddress?.street && (
@@ -140,10 +144,10 @@ export function CreateStationPage() {
               )}
             </div>
             <div className="w-28 space-y-1.5">
-              <label className="text-sm font-medium">N°</label>
+              <label className="text-sm font-medium">{t('create.field.zipCode')}</label>
               <input
-                {...register('officeAddress.number')}
-                placeholder="12"
+                {...register('officeAddress.zipCode')}
+                placeholder={t('create.placeholder.zipCode')}
                 className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
               />
             </div>
@@ -151,11 +155,11 @@ export function CreateStationPage() {
 
           <div className="space-y-1.5">
             <label className="text-sm font-medium">
-              Ville <span className="text-destructive">*</span>
+              {t('create.field.locality')} <span className="text-destructive">*</span>
             </label>
             <input
               {...register('officeAddress.locality')}
-              placeholder="ex. Chambéry"
+              placeholder={t('create.placeholder.locality')}
               className="w-full rounded-lg border bg-white px-3 py-2 text-sm outline-none ring-ring focus:ring-2 placeholder:text-muted-foreground"
             />
             {errors.officeAddress?.locality && (
@@ -175,14 +179,14 @@ export function CreateStationPage() {
             onClick={() => navigate(-1)}
             className="rounded-lg border px-5 py-2 text-sm font-medium hover:bg-muted transition-colors"
           >
-            Annuler
+            {tc('actions.cancel')}
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
             className="flex-1 rounded-lg bg-destructive px-5 py-2 text-sm font-medium text-white hover:bg-destructive/90 transition-colors disabled:opacity-50"
           >
-            {isSubmitting ? 'Création...' : 'Créer la station'}
+            {isSubmitting ? t('create.submitting') : t('create.submit')}
           </button>
         </div>
       </form>

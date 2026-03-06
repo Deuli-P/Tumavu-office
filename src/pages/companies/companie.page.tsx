@@ -193,10 +193,10 @@ export default function CompaniePage() {
       {/* Announcements */}
       <section className="space-y-3">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-          {t('detail.announcements')} ({company.announcements.length})
+          {t('detail.announcements')} ({company?.announcements?.length ?? 0})
         </h2>
         <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
-          {company.announcements.length === 0 ? (
+          {company?.announcements?.length === 0 ? (
             <p className="px-6 py-6 text-sm text-muted-foreground text-center">{t('detail.noAnnouncements')}</p>
           ) : (
             <table className="w-full text-sm">
@@ -210,7 +210,7 @@ export default function CompaniePage() {
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {company.announcements.map((ann) => (
+                {company?.announcements?.map((ann) => (
                   <tr key={ann.id} className="hover:bg-muted/30 transition-colors">
                     <td className="px-6 py-4 font-medium">{ann.title}</td>
                     <td className="px-6 py-4 text-muted-foreground">{ann.jobTitle ?? '—'}</td>

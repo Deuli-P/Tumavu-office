@@ -175,7 +175,7 @@ export function AdminDashboardPage() {
                 <div className={`mb-3 inline-flex rounded-lg p-2 ${color}`}>
                   <Icon className="h-5 w-5" />
                 </div>
-                <p className="text-2xl font-bold">{value.toLocaleString('fr-FR')}</p>
+                <p className="text-2xl font-bold">{value ? value.toLocaleString('fr-FR') : 0}</p>
                 <p className="text-sm text-muted-foreground mt-0.5">{label}</p>
                 <p className="text-xs text-muted-foreground/70 mt-1">{sub}</p>
               </div>

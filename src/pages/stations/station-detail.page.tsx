@@ -103,22 +103,22 @@ function CompanyCard({ company, onNavigate }: {
 
       <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
         <MapPin className="h-3.5 w-3.5 shrink-0" />
-        {company.address.locality}, {company.address.country.name}
+        {company?.address?.locality}, {company?.address?.country?.name}
       </div>
 
       <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
         <Users className="h-3.5 w-3.5 shrink-0" />
-        Owner : {company.owner.firstName} {company.owner.lastName}
+        Owner : {company?.owner?.firstName} {company?.owner?.lastName}
       </div>
 
       <div className="flex items-center gap-4 pt-1 border-t text-xs text-muted-foreground">
         <span className="flex items-center gap-1">
           <FileText className="h-3.5 w-3.5" />
-          {t('detail.announcements', { count: company._count.announcements })}
+          {t('detail.announcements', { count: company?._count?.announcements })}
         </span>
         <span className="flex items-center gap-1">
           <TrendingUp className="h-3.5 w-3.5" />
-          {t('detail.passages', { count: company._count.passages })}
+          {t('detail.passages', { count: company?._count?.passages })}
         </span>
       </div>
     </div>
@@ -229,11 +229,11 @@ export function StationDetailPage() {
             <FileText className="h-4 w-4 text-muted-foreground" />
             {t('detail.recentAnnouncements')}
           </h2>
-          {detail.recentAnnouncements.length === 0 ? (
+          {detail?.recentAnnouncements?.length === 0 ? (
             <p className="text-sm text-muted-foreground italic">{t('detail.noAnnouncements')}</p>
           ) : (
             <div className="space-y-3">
-              {detail.recentAnnouncements.map((a) => {
+              {detail?.recentAnnouncements?.map((a) => {
                 const color = a.status ? statusColor[a.status] : null
                 return (
                   <div
