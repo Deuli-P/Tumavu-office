@@ -40,12 +40,12 @@
     },
     "companies": "Entreprises ({{count}})",
     "noCompanies": "Aucune entreprise rattachée.",
-    "recentAnnouncements": "Annonces récentes",
-    "noAnnouncements": "Aucune annonce.",
+    "recentJobOffers": "Offres récentes",
+    "noJobOffers": "Aucune offre.",
     "applications_one": "{{count}} candidature",
     "applications_other": "{{count}} candidatures",
-    "announcements_one": "{{count}} annonce",
-    "announcements_other": "{{count}} annonces",
+    "jobOffers_one": "{{count}} offre",
+    "jobOffers_other": "{{count}} offres",
     "passages_one": "{{count}} passage",
     "passages_other": "{{count}} passages"
   }

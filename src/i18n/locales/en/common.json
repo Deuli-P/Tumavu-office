@@ -31,6 +31,12 @@
     "CLOSED": "Closed",
     "CANCELLED": "Cancelled"
   },
+  "offerStatus": {
+    "DRAFT": "Draft",
+    "PUBLISHED": "Published",
+    "CLOSED": "Closed",
+    "CANCELLED": "Cancelled"
+  },
   "appStatus": {
     "CONFIRMED": "Confirmed",
     "REFUSED": "Refused",

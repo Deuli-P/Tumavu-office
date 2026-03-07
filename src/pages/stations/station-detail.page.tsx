@@ -5,7 +5,7 @@ import {
   ArrowLeft, MapPin, Globe, Building2, Users, Briefcase,
   FileText, TrendingUp, CalendarDays, UserCheck,
 } from 'lucide-react'
-import type { AnnouncementStatus } from '@/types/annonce.types'
+import type { JobOfferStatus } from '@/types/annonce.types'
 
 const backendUrl = import.meta.env.VITE_API_BASE_URL
 
@@ -15,7 +15,7 @@ interface StationDetail {
   id: number
   name: string
   country: { id: number; name: string; code: string }
-  officeAddress: { street: string; number: string | null; locality: string; country: { name: string } }
+  officeAddress: { street: string; streetNumber: string | null; locality: string; country: { name: string } }
   kpis: {
     companiesCount: number
     passagesThisWeek: number
@@ -29,14 +29,15 @@ interface StationDetail {
     phone: string | null
     owner: { firstName: string; lastName: string }
     address: { locality: string; country: { name: string } }
-    _count: { announcements: number; passages: number }
+    _count: { jobOffers: number; passages: number }
   }[]
-  recentAnnouncements: {
+  recentJobOffers: {
     id: number
     title: string
-    status: AnnouncementStatus | null
-    createdAt: string
-    job: { title: string } | null
+    status: JobOfferStatus
+    contractType: string | null
+    createdAt: Date
+    job: { title: string }
     company: { name: string } | null
     _count: { applications: number }
   }[]
@@ -44,10 +45,11 @@ interface StationDetail {
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
-const statusColor: Record<string, string> = {
-  ACTIVE:    'bg-green-100 text-green-700',
-  CLOSED:    'bg-gray-100 text-gray-600',
-  CANCELLED: 'bg-red-100 text-red-600',
+const offerStatusColor: Record<string, string> = {
+  DRAFT:     'bg-gray-100 text-gray-600',
+  PUBLISHED: 'bg-green-100 text-green-700',
+  CLOSED:    'bg-red-100 text-red-600',
+  CANCELLED: 'bg-orange-100 text-orange-600',
 }
 
 function formatDate(d: string) {
@@ -114,7 +116,7 @@ function CompanyCard({ company, onNavigate }: {
       <div className="flex items-center gap-4 pt-1 border-t text-xs text-muted-foreground">
         <span className="flex items-center gap-1">
           <FileText className="h-3.5 w-3.5" />
-          {t('detail.announcements', { count: company?._count?.announcements })}
+          {t('detail.jobOffers', { count: company?._count?.jobOffers })}
         </span>
         <span className="flex items-center gap-1">
           <TrendingUp className="h-3.5 w-3.5" />
@@ -186,7 +188,7 @@ export function StationDetailPage() {
               </span>
               <span className="flex items-center gap-1.5">
                 <MapPin className="h-3.5 w-3.5" />
-                {detail.officeAddress.street}{detail.officeAddress.number ? ` ${detail.officeAddress.number}` : ''}, {detail.officeAddress.locality}
+                {detail.officeAddress.street}{detail.officeAddress.streetNumber ? ` ${detail.officeAddress.streetNumber}` : ''}, {detail.officeAddress.locality}
               </span>
             </div>
           </div>
@@ -227,43 +229,35 @@ export function StationDetailPage() {
         <div className="space-y-4">
           <h2 className="text-base font-semibold flex items-center gap-2">
             <FileText className="h-4 w-4 text-muted-foreground" />
-            {t('detail.recentAnnouncements')}
+            {t('detail.recentJobOffers')}
           </h2>
-          {detail?.recentAnnouncements?.length === 0 ? (
-            <p className="text-sm text-muted-foreground italic">{t('detail.noAnnouncements')}</p>
+          {detail?.recentJobOffers?.length === 0 ? (
+            <p className="text-sm text-muted-foreground italic">{t('detail.noJobOffers')}</p>
           ) : (
             <div className="space-y-3">
-              {detail?.recentAnnouncements?.map((a) => {
-                const color = a.status ? statusColor[a.status] : null
-                return (
-                  <div
-                    key={a.id}
-                    onClick={() => navigate('/app/annonces')}
-                    className="rounded-xl border bg-white p-4 shadow-sm space-y-2 cursor-pointer hover:border-destructive/40 transition-colors"
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <p className="text-sm font-medium leading-tight">{a.title}</p>
-                      {color && a.status && (
-                        <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${color}`}>
-                          {tc(`status.${a.status}`)}
-                        </span>
-                      )}
-                    </div>
-                    {a.company && <p className="text-xs text-muted-foreground">{a.company.name}</p>}
-                    {a.job && (
-                      <p className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Briefcase className="h-3 w-3" />{a.job.title}
-                      </p>
-                    )}
-                    <div className="flex items-center justify-between text-xs text-muted-foreground pt-1 border-t">
-                      <span className="flex items-center gap-1">
-                        <Users className="h-3 w-3" />{t('detail.applications', { count: a._count.applications })}
-                      </span>
-                      <span>{formatDate(a.createdAt)}</span>
-                    </div>
+              {detail?.recentJobOffers?.map((a) => (
+                <div
+                  key={a.id}
+                  className="rounded-xl border bg-white p-4 shadow-sm space-y-2"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="text-sm font-medium leading-tight">{a.title}</p>
+                    <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${offerStatusColor[a.status] ?? 'bg-gray-100 text-gray-600'}`}>
+                      {tc(`offerStatus.${a.status}`)}
+                    </span>
                   </div>
-                )
-              })}
+                  {a.company && <p className="text-xs text-muted-foreground">{a.company.name}</p>}
+                  <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                    <Briefcase className="h-3 w-3" />{a.job.title}
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-1 border-t">
+                    <span className="flex items-center gap-1">
+                      <Users className="h-3 w-3" />{t('detail.applications', { count: a._count.applications })}
+                    </span>
+                    <span>{formatDate(String(a.createdAt))}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>

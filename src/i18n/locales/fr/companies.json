@@ -22,18 +22,19 @@
     "phone": "Téléphone",
     "passagesWeek": "Passages cette semaine",
     "passagesMonth": "Passages ce mois",
-    "jobs": "Offres d'emploi",
-    "announcements": "Annonces",
-    "noJobs": "Aucune offre d'emploi.",
-    "noAnnouncements": "Aucune annonce.",
+    "jobs": "Postes",
+    "jobOffers": "Offres d'emploi",
+    "noJobs": "Aucun poste créé.",
+    "noJobOffers": "Aucune offre d'emploi.",
     "table": {
       "title": "Titre",
-      "contract": "Contrat",
+      "category": "Catégorie",
       "status": "Statut",
       "tags": "Tags",
       "applications": "Candidatures",
+      "offers": "Offres",
       "postedAt": "Publié le",
-      "job": "Offre"
+      "job": "Poste"
     }
   },
   "create": {

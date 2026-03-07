@@ -22,18 +22,19 @@
     "phone": "Phone",
     "passagesWeek": "Passages this week",
     "passagesMonth": "Passages this month",
-    "jobs": "Job postings",
-    "announcements": "Announcements",
-    "noJobs": "No job postings.",
-    "noAnnouncements": "No announcements.",
+    "jobs": "Job templates",
+    "jobOffers": "Job offers",
+    "noJobs": "No job templates.",
+    "noJobOffers": "No job offers.",
     "table": {
       "title": "Title",
-      "contract": "Contract",
+      "category": "Category",
       "status": "Status",
       "tags": "Tags",
       "applications": "Applications",
+      "offers": "Offers",
       "postedAt": "Posted on",
-      "job": "Job"
+      "job": "Template"
     }
   },
   "create": {

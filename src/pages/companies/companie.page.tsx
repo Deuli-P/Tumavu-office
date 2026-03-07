@@ -14,41 +14,32 @@ type CompanyDetail = {
   type: string | null
   phone: string | null
   createdAt: string
-  address: { street: string; number: string | null; locality: string; country: { name: string; code: string } }
+  address: { street: string; streetNumber: string | null; zipCode: string | null; locality: string; country: { name: string; code: string } }
   station: { id: number; name: string }
   owner: { id: string; firstName: string; lastName: string; email: string }
   jobs: {
     id: number
     title: string
-    contractType: string | null
-    status: string | null
+    category: { id: number; name: string } | null
     tags: Tag[]
-    _count: { announcements: number }
+    _count: { jobOffers: number }
   }[]
-  announcements: {
+  jobOffers: {
     id: number
     title: string
-    status: string | null
+    status: string
     createdAt: string
-    jobTitle: string | null
+    jobTitle: string
     _count: { applications: number }
   }[]
   kpis: { passagesWeek: number; passagesMonth: number }
 }
 
-const statusColor: Record<string, string> = {
-  ACTIVE: 'bg-green-100 text-green-700',
-  CLOSED: 'bg-gray-100 text-gray-600',
-  CANCELLED: 'bg-red-100 text-red-600',
-}
-
-const contractColor: Record<string, string> = {
-  CDD: 'bg-blue-100 text-blue-700',
-  CDI: 'bg-green-100 text-green-700',
-  FREELANCE: 'bg-purple-100 text-purple-700',
-  STAGE: 'bg-yellow-100 text-yellow-700',
-  RESORT: 'bg-orange-100 text-orange-700',
-  OTHER: 'bg-gray-100 text-gray-600',
+const offerStatusColor: Record<string, string> = {
+  DRAFT: 'bg-gray-100 text-gray-600',
+  PUBLISHED: 'bg-green-100 text-green-700',
+  CLOSED: 'bg-red-100 text-red-600',
+  CANCELLED: 'bg-orange-100 text-orange-700',
 }
 
 export default function CompaniePage() {
@@ -115,7 +106,7 @@ export default function CompaniePage() {
         </InfoCard>
         <InfoCard icon={<Building2 className="h-4 w-4" />} label={t('detail.address')}>
           <p className="font-medium">{company.address.locality}</p>
-          <p className="text-xs text-muted-foreground">{company.address.street}{company.address.number ? ` ${company.address.number}` : ''}</p>
+          <p className="text-xs text-muted-foreground">{company.address.street}{company.address.streetNumber ? ` ${company.address.streetNumber}` : ''}</p>
         </InfoCard>
         {company.phone && (
           <InfoCard icon={<Phone className="h-4 w-4" />} label={t('detail.phone')}>
@@ -143,9 +134,9 @@ export default function CompaniePage() {
               <thead>
                 <tr className="border-b bg-muted/40">
                   <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('detail.table.title')}</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('detail.table.contract')}</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('detail.table.category')}</th>
                   <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('detail.table.tags')}</th>
-                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('detail.table.applications')}</th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('detail.table.offers')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
@@ -158,9 +149,9 @@ export default function CompaniePage() {
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      {job.contractType ? (
-                        <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${contractColor[job.contractType] ?? 'bg-gray-100 text-gray-600'}`}>
-                          {job.contractType}
+                      {job.category ? (
+                        <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium">
+                          {job.category.name}
                         </span>
                       ) : (
                         <span className="text-muted-foreground">—</span>
@@ -179,7 +170,7 @@ export default function CompaniePage() {
                     <td className="px-6 py-4">
                       <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                         <Users className="h-3.5 w-3.5" />
-                        {job._count.announcements}
+                        {job._count.jobOffers}
                       </span>
                     </td>
                   </tr>
@@ -190,14 +181,14 @@ export default function CompaniePage() {
         </div>
       </section>
 
-      {/* Announcements */}
+      {/* Job Offers */}
       <section className="space-y-3">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-          {t('detail.announcements')} ({company?.announcements?.length ?? 0})
+          {t('detail.jobOffers')} ({company.jobOffers.length})
         </h2>
         <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
-          {company?.announcements?.length === 0 ? (
-            <p className="px-6 py-6 text-sm text-muted-foreground text-center">{t('detail.noAnnouncements')}</p>
+          {company.jobOffers.length === 0 ? (
+            <p className="px-6 py-6 text-sm text-muted-foreground text-center">{t('detail.noJobOffers')}</p>
           ) : (
             <table className="w-full text-sm">
               <thead>
@@ -210,27 +201,23 @@ export default function CompaniePage() {
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {company?.announcements?.map((ann) => (
-                  <tr key={ann.id} className="hover:bg-muted/30 transition-colors">
-                    <td className="px-6 py-4 font-medium">{ann.title}</td>
-                    <td className="px-6 py-4 text-muted-foreground">{ann.jobTitle ?? '—'}</td>
+                {company.jobOffers.map((offer) => (
+                  <tr key={offer.id} className="hover:bg-muted/30 transition-colors">
+                    <td className="px-6 py-4 font-medium">{offer.title}</td>
+                    <td className="px-6 py-4 text-muted-foreground">{offer.jobTitle}</td>
                     <td className="px-6 py-4">
-                      {ann.status ? (
-                        <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusColor[ann.status] ?? 'bg-gray-100 text-gray-600'}`}>
-                          {tc(`status.${ann.status}`)}
-                        </span>
-                      ) : (
-                        <span className="text-muted-foreground">—</span>
-                      )}
+                      <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${offerStatusColor[offer.status] ?? 'bg-gray-100 text-gray-600'}`}>
+                        {tc(`offerStatus.${offer.status}`)}
+                      </span>
                     </td>
                     <td className="px-6 py-4">
                       <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
                         <Users className="h-3.5 w-3.5" />
-                        {ann._count.applications}
+                        {offer._count.applications}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-muted-foreground">
-                      {new Date(ann.createdAt).toLocaleDateString(locale)}
+                      {new Date(offer.createdAt).toLocaleDateString(locale)}
                     </td>
                   </tr>
                 ))}
