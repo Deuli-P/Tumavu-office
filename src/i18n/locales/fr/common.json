@@ -5,7 +5,7 @@
     "stations": "Stations",
     "users": "Utilisateurs",
     "permissions": "Permissions",
-    "annonces": "Annonces",
+    "annonces": "Offres d'emploi",
     "tags": "Tags",
     "candidatures": "Candidatures"
   },
@@ -39,11 +39,12 @@
     "CANCELLED": "Annulée"
   },
   "appStatus": {
-    "CONFIRMED": "Confirmé",
-    "REFUSED": "Refusé",
+    "PENDING": "En attente",
+    "ACCEPTED": "Accepté",
+    "REJECTED": "Refusé",
     "INTERVIEW": "Entretien",
-    "SIGNATURE": "Signature",
-    "CANCELLED": "Annulée"
+    "TEST": "Test",
+    "PHONE": "Appel téléphonique"
   },
   "role": {
     "all": "Tous",

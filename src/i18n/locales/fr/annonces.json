@@ -3,20 +3,38 @@
   "subtitle_one": "{{count}} annonce",
   "subtitle_other": "{{count}} annonces",
   "noAnnouncements": "Aucune annonce.",
+  "new": "+ Nouvelle annonce",
+  "filter": {
+    "all": "Tous les statuts"
+  },
   "table": {
     "title": "Titre",
-    "job": "Job",
-    "tags": "Tags",
-    "company": "Company",
-    "station": "Station",
     "status": "Statut",
     "publishedAt": "Publiée le",
-    "applications": "Candidatures"
+    "creator": "Créateur",
+    "attachments": "Pièces jointes",
+    "date": "Créée le"
   },
-  "drawer": {
-    "publishedOn": "Publiée le {{date}}",
-    "applicants": "Postulants ({{count}})",
-    "noApplicants": "Aucun postulant pour le moment.",
-    "appliedOn": "Postulé le {{date}}"
+  "create": {
+    "title": "Nouvelle annonce",
+    "subtitle": "Créez une annonce visible sur la plateforme.",
+    "fields": {
+      "title": "Titre",
+      "description": "Description",
+      "status": "Statut",
+      "publishedAt": "Date de publication",
+      "attachments": "Pièces jointes",
+      "filename": "Nom du fichier",
+      "url": "URL"
+    },
+    "addAttachment": "+ Ajouter une pièce jointe",
+    "submit": "Créer l'annonce",
+    "submitting": "Création...",
+    "cancel": "Annuler"
+  },
+  "status": {
+    "DRAFT": "Brouillon",
+    "PUBLISHED": "Publiée",
+    "DELETED": "Supprimée"
   }
 }

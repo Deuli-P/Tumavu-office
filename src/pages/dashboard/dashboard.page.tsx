@@ -23,7 +23,7 @@ interface DashboardData {
   stats: {
     companiesTotal: number
     companiesThisMonth: number
-    announcementsTotal: number
+    jobOffersTotal: number
     activeUsersThisMonth: number
     newUsersThisMonth: number
   }
@@ -34,7 +34,7 @@ interface DashboardData {
     name: string
     createdAt: string
     address: { locality: string; country: { name: string } }
-    _count: { announcements: number; passages: number }
+    _count: { jobOffers: number; passages: number }
   }[]
 }
 
@@ -124,11 +124,11 @@ export function AdminDashboardPage() {
           sub: t('stats.companiesThisMonth', { count: data.stats.companiesThisMonth }),
         },
         {
-          label: t('stats.announcements'),
-          value: data.stats.announcementsTotal,
+          label: t('stats.jobOffers'),
+          value: data.stats.jobOffersTotal,
           icon: Briefcase,
           color: 'bg-blue-50 text-blue-600',
-          sub: t('stats.announcementsSub'),
+          sub: t('stats.jobOffersSub'),
         },
         {
           label: t('stats.activeUsers'),
@@ -255,7 +255,7 @@ export function AdminDashboardPage() {
                   <div className="flex items-center gap-6 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1">
                       <Briefcase className="h-3.5 w-3.5" />
-                      {t('recentCompanies.announcements', { count: company._count.announcements })}
+                      {t('recentCompanies.jobOffers', { count: company._count.jobOffers })}
                     </span>
                     <span className="flex items-center gap-1">
                       <TrendingUp className="h-3.5 w-3.5" />

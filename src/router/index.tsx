@@ -7,6 +7,7 @@ import { CreateStationPage } from '@/pages/stations/create-station.page'
 import { StationDetailPage } from '@/pages/stations/station-detail.page'
 import { PermissionsPage } from '@/pages/permissions/permissions.page'
 import { AnnoncesPage } from '@/pages/annonces/annonces.page'
+import { CreateAnnoncePage } from '@/pages/annonces/create-annonce.page'
 import { TagsPage } from '@/pages/tags/tags.page'
 import { CandidaturesPage } from '@/pages/candidatures/candidatures.page'
 import GuestOnlyLayout from './guest'
@@ -48,6 +49,7 @@ export const router = createBrowserRouter([
           { path: 'stations/:id', element: <StationDetailPage /> },
           { path: 'permissions', element: <PermissionsPage /> },
           { path: 'annonces', element: <AnnoncesPage /> },
+          { path: 'annonces/new', element: <CreateAnnoncePage /> },
           { path: 'tags', element: <TagsPage /> },
           { path: 'candidatures', element: <CandidaturesPage /> },
         ],

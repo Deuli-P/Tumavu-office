@@ -1,22 +1,40 @@
 {
-  "title": "Job Posts",
-  "subtitle_one": "{{count}} job post",
-  "subtitle_other": "{{count}} job posts",
-  "noAnnouncements": "No job posts.",
+  "title": "Announcements",
+  "subtitle_one": "{{count}} announcement",
+  "subtitle_other": "{{count}} announcements",
+  "noAnnouncements": "No announcements.",
+  "new": "+ New announcement",
+  "filter": {
+    "all": "All statuses"
+  },
   "table": {
     "title": "Title",
-    "job": "Job",
-    "tags": "Tags",
-    "company": "Company",
-    "station": "Station",
     "status": "Status",
     "publishedAt": "Published on",
-    "applications": "Applications"
+    "creator": "Creator",
+    "attachments": "Attachments",
+    "date": "Created on"
   },
-  "drawer": {
-    "publishedOn": "Published on {{date}}",
-    "applicants": "Applicants ({{count}})",
-    "noApplicants": "No applicants yet.",
-    "appliedOn": "Applied on {{date}}"
+  "create": {
+    "title": "New announcement",
+    "subtitle": "Create an announcement visible on the platform.",
+    "fields": {
+      "title": "Title",
+      "description": "Description",
+      "status": "Status",
+      "publishedAt": "Publication date",
+      "attachments": "Attachments",
+      "filename": "Filename",
+      "url": "URL"
+    },
+    "addAttachment": "+ Add attachment",
+    "submit": "Create announcement",
+    "submitting": "Creating...",
+    "cancel": "Cancel"
+  },
+  "status": {
+    "DRAFT": "Draft",
+    "PUBLISHED": "Published",
+    "DELETED": "Deleted"
   }
 }

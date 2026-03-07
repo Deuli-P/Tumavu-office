@@ -4,8 +4,8 @@
   "stats": {
     "companies": "Companies",
     "companiesThisMonth": "+{{count}} this month",
-    "announcements": "Total job posts",
-    "announcementsSub": "across the platform",
+    "jobOffers": "Job offers",
+    "jobOffersSub": "across the platform",
     "activeUsers": "Active users",
     "activeUsersSub": "logged in this month",
     "newUsers": "New sign-ups",
@@ -20,8 +20,8 @@
   "recentCompanies": {
     "title": "Recently registered companies",
     "new": "+ New company",
-    "announcements_one": "{{count}} job post",
-    "announcements_other": "{{count}} job posts",
+    "jobOffers_one": "{{count}} offer",
+    "jobOffers_other": "{{count}} offers",
     "passages_one": "{{count}} passage",
     "passages_other": "{{count}} passages"
   }

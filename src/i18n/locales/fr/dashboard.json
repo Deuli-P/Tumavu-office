@@ -4,8 +4,8 @@
   "stats": {
     "companies": "Entreprises totales",
     "companiesThisMonth": "+{{count}} ce mois",
-    "announcements": "Annonces totales",
-    "announcementsSub": "sur toute la plateforme",
+    "jobOffers": "Offres d'emploi",
+    "jobOffersSub": "sur toute la plateforme",
     "activeUsers": "Utilisateurs actifs",
     "activeUsersSub": "connectés ce mois",
     "newUsers": "Nouveaux inscrits",
@@ -20,8 +20,8 @@
   "recentCompanies": {
     "title": "Dernières entreprises inscrites",
     "new": "+ Nouvelle entreprise",
-    "announcements_one": "{{count}} annonce",
-    "announcements_other": "{{count}} annonces",
+    "jobOffers_one": "{{count}} offre",
+    "jobOffers_other": "{{count}} offres",
     "passages_one": "{{count}} passage",
     "passages_other": "{{count}} passages"
   }

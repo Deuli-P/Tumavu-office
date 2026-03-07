@@ -9,7 +9,7 @@
   },
   "table": {
     "candidate": "Candidate",
-    "announcement": "Announcement",
+    "offer": "Job offer",
     "company": "Company",
     "station": "Station",
     "status": "Status",

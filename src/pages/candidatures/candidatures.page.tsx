@@ -8,7 +8,7 @@ type ApplicationItem = {
   status: string | null
   createdAt: string
   user: { id: string; firstName: string; lastName: string; auth: { email: string } | null }
-  announcement: {
+  offer: {
     id: number
     title: string
     company: { id: string; name: string; station: { id: number; name: string } | null } | null
@@ -16,14 +16,15 @@ type ApplicationItem = {
 }
 
 const statusColor: Record<string, string> = {
-  CONFIRMED: 'bg-green-100 text-green-700',
-  REFUSED: 'bg-red-100 text-red-600',
+  PENDING: 'bg-yellow-100 text-yellow-700',
+  ACCEPTED: 'bg-green-100 text-green-700',
+  REJECTED: 'bg-red-100 text-red-600',
   INTERVIEW: 'bg-blue-100 text-blue-700',
-  SIGNATURE: 'bg-purple-100 text-purple-700',
-  CANCELLED: 'bg-gray-100 text-gray-600',
+  TEST: 'bg-purple-100 text-purple-700',
+  PHONE: 'bg-orange-100 text-orange-700',
 }
 
-const APPLICATION_STATUSES = ['CONFIRMED', 'REFUSED', 'INTERVIEW', 'SIGNATURE', 'CANCELLED']
+const APPLICATION_STATUSES = ['PENDING', 'ACCEPTED', 'REJECTED', 'INTERVIEW', 'TEST', 'PHONE']
 
 export function CandidaturesPage() {
   const { t, i18n } = useTranslation('candidatures')
@@ -36,7 +37,7 @@ export function CandidaturesPage() {
     setLoading(true)
     const params = new URLSearchParams()
     if (status) params.set('status', status)
-    const res = await fetch(`${backendUrl}/annonce/admin/applications?${params}`, {
+    const res = await fetch(`${backendUrl}/job-offer/admin/applications?${params}`, {
       credentials: 'include',
     })
     const data = res.ok ? await res.json() : []
@@ -81,7 +82,7 @@ export function CandidaturesPage() {
             <thead>
               <tr className="border-b bg-muted/40">
                 <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.candidate')}</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.announcement')}</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.offer')}</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.company')}</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.station')}</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t('table.status')}</th>
@@ -95,9 +96,9 @@ export function CandidaturesPage() {
                     <p className="font-medium">{app.user.firstName} {app.user.lastName}</p>
                     <p className="text-xs text-muted-foreground">{app.user.auth?.email ?? ''}</p>
                   </td>
-                  <td className="px-6 py-4 font-medium">{app.announcement.title}</td>
-                  <td className="px-6 py-4 text-muted-foreground">{app.announcement.company?.name ?? '—'}</td>
-                  <td className="px-6 py-4 text-muted-foreground">{app.announcement.company?.station?.name ?? '—'}</td>
+                  <td className="px-6 py-4 font-medium">{app.offer.title}</td>
+                  <td className="px-6 py-4 text-muted-foreground">{app.offer.company?.name ?? '—'}</td>
+                  <td className="px-6 py-4 text-muted-foreground">{app.offer.company?.station?.name ?? '—'}</td>
                   <td className="px-6 py-4">
                     {app.status ? (
                       <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${statusColor[app.status] ?? 'bg-gray-100 text-gray-600'}`}>
